@@ -1,0 +1,128 @@
+@import '../../styles/globalVariables.scss';
+
+.section {
+  background-image: url('../../assets/img/main_background.jpg');
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover;
+  color: $white;
+  width: 100%;
+	height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 0 $side-padding;
+  box-sizing: border-box;
+  @media screen and (max-width: $breakpoint-tablet) {
+    padding: 0 30px;
+  }
+  @media screen and (max-width: $breakpoint-mobile-big) {
+    padding: 0 20px;
+  }
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding: 0 10px;
+  }
+}
+.container {
+	width: 100%;
+	max-width: $max-width;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 42px;
+  text-transform: none;
+  padding-top: 60px;
+  align-items: end;
+  @media screen and (max-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 100px;
+    justify-items: center;
+    padding-top: 30px;
+  }
+  @media screen and (max-width: $breakpoint-mobile) {
+    gap: 105px;
+  }
+}
+.title {
+  font-size: 60px;
+  line-height: 80px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+  max-width: 710px;
+  text-transform: none;
+  color: $gold;
+  text-transform: uppercase;
+  @media screen and (max-width: $breakpoint-mobile-big) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  @media screen and (max-width: $breakpoint-mobile) {
+    font-size: 25px;
+    line-height: 32px;
+    text-align: center;
+    max-width: 200px;
+    letter-spacing: 0.06em;
+  }
+}
+.subtitle {
+  margin: 0;
+  font-family: 'Arial';
+  font-size: 22px;
+  line-height: 32px;
+  letter-spacing: 0px;
+  text-align: left;
+  max-width: 460px;
+  color: #cdcdcd;
+  @media screen and (max-width: $breakpoint-mobile) {
+    text-align: center;
+  }
+}
+.content {
+  padding: 0 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  align-self: center;
+  @media screen and (max-width: $breakpoint-tablet) {
+    max-width: 460px;
+    padding-bottom: 0;
+  }
+  @media screen and (max-width: $breakpoint-mobile) {
+    align-items: center;
+  }
+}
+.btnWrapper {
+	display: flex;
+	gap: 20px;
+  @media screen and (max-width: $breakpoint-tablet) {
+    display: flex;
+		gap: 20px;
+    justify-content: center;
+  }
+}
+
+.button {
+  border: none;
+  padding: 15px 45px;
+  background-color: $gold;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0.06em;
+  text-align: left;
+  border-radius: 26px;
+  color: $font-button-color;
+  background-color: $gold;
+  text-decoration: none;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+
+  @media (hover: none) {
+    background-color: $gold;
+  }
+	&:hover {
+  background-color: $gold-hover;
+}
+}

@@ -88,7 +88,7 @@ export const removeUserFromFriends = createAsyncThunk<
 UserTypeExt,
 string,
 { rejectValue: string }
->('about/addUserToFriends', async function (id, { dispatch, rejectWithValue }) {
+>('about/removeUserFromFriends', async function (id, { dispatch, rejectWithValue }) {
   try {
     const res = await fetch(
       `${BASE_URL}${URL_ENDPOINTS.FRIENDS}/${id}/connect`,

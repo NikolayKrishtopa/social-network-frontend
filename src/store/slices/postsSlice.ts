@@ -50,7 +50,7 @@ PostType,
 {text: string},
 { rejectValue: string }
 >(
-  'posts/getPosts',
+  'posts/addPost',
   async function (post, { dispatch, rejectWithValue }) {
     dispatch(startLoading());
     try {
@@ -83,7 +83,7 @@ PostType,
 string,
 { rejectValue: string }
 >(
-  'posts/getPosts',
+  'posts/likePost',
   async function (id, { dispatch, rejectWithValue }) {
     dispatch(startLoading());
     try {
@@ -115,7 +115,7 @@ PostType,
 string,
 { rejectValue: string }
 >(
-  'posts/getPosts',
+  'posts/unlikePost',
   async function (id, { dispatch, rejectWithValue }) {
     dispatch(startLoading());
     try {

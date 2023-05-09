@@ -43,7 +43,7 @@ export const register = createAsyncThunk<
 UserTypeExt,
 UserType
 >(
-  'auth/login',
+  'auth/register',
   async (payload, { dispatch, rejectWithValue }) => {
     const response = await fetch(
       BASE_URL + URL_ENDPOINTS.REGISTER,

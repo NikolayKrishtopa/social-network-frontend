@@ -9,6 +9,7 @@ export default function buildDevServer (
     static: options.paths.build,
     open: true,
     compress: true,
-    port: options.port
+    port: options.port,
+    historyApiFallback: true
   };
 }
