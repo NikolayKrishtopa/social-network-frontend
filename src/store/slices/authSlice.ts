@@ -11,9 +11,27 @@ interface IAuthState {
   error: null | string
   isLoading: boolean
   systMsgAuth: string
-  mustChgPswd: boolean
 }
 
+export const logout = createAsyncThunk<
+{withMsg: boolean},
+{withMsg: boolean}
+>(
+  'auth/logout',
+  async ({withMsg}, { dispatch, rejectWithValue }) => {
+    const res = await fetch(
+      BASE_URL + URL_ENDPOINTS.LOGOUT,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      }
+    );
+    return {withMsg};
+  }
+);
 export const login = createAsyncThunk<
 UserTypeExt,
 UserLoginType
@@ -27,7 +45,8 @@ UserLoginType
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        credentials: 'include',
       }
     );
     if (response.ok) {
@@ -80,12 +99,12 @@ void,
       if (res.ok) {
         const user = await res.json();
         return user;
-      } else {
-        dispatch(logout());
+      } else { 
+        dispatch(logout({withMsg:false}));
         throw new Error(SYSTEM_MESSAGES.COOKIES_EXPIRED);
       }
     } catch (err: any) {
-      dispatch(logout());
+      dispatch(logout({withMsg:false}));
       return rejectWithValue(err.message);
     }
   }
@@ -100,26 +119,15 @@ const authSlice = createSlice({
     error: null,
     isLoading: false,
     systMsgAuth: '',
-    mustChgPswd: false
   } as IAuthState,
   reducers: {
     startLoading: (state) => {
       state.isLoading = true;
     },
-    logout: (state) => {
-      state.isLogged = false;
-      state.currentUser = null;
-    },
     logoutWithPopup: (state) => {
       state.isLogged = false;
       state.currentUser = null;
       state.systMsgAuth = SYSTEM_MESSAGES.LOGOUT_SCSS;
-    },
-    setMustChgPswd: (state, action) => {
-      state.mustChgPswd = action.payload;
-    },
-    showPasswordAlert: (state) => {
-      state.systMsgAuth = SYSTEM_MESSAGES.FORGOT_PASSWORD_ALERT;
     },
     clearSystMsgAuth: (state) => {
       state.systMsgAuth = '';
@@ -136,6 +144,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLogged = true;
         state.systMsgAuth = SYSTEM_MESSAGES.LOGIN_SCSS;
+        state.currentUser = action.payload;
       })
       .addCase(login.rejected, (state, { error }) => {
         state.isLoading = false;
@@ -143,7 +152,6 @@ const authSlice = createSlice({
         state.error = `${error.name}: ${error.message}`;
         state.systMsgAuth = error.message as string;
       })
-
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -157,16 +165,30 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = `${action.error.name}: ${action.error.message}`;
         state.systMsgAuth = SYSTEM_MESSAGES.COOKIES_EXPIRED;
+      })
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isLogged = true;
+        state.systMsgAuth = SYSTEM_MESSAGES.LOGOUT_SCSS;
+        state.currentUser = null;
+        state.isLogged = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = `${action.error.name}: ${action.error.message}`;
+        state.currentUser = null;
+        state.isLogged = false;
       });
       
   }
 });
 export const {
-  logout,
   startLoading,
   clearSystMsgAuth,
   logoutWithPopup,
-  showPasswordAlert,
-  setMustChgPswd
 } = authSlice.actions;
 export default authSlice.reducer;

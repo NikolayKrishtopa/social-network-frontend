@@ -14,17 +14,16 @@ interface IPostsState {
 
 export const getPosts = createAsyncThunk<
 Array<PostType>,
-number,
+void,
 { rejectValue: string }
 >(
   'posts/getPosts',
-  async function (page, { dispatch, rejectWithValue }) {
+  async function (_, { dispatch, rejectWithValue }) {
     dispatch(startLoading());
     try {
-      const res = await fetch(
-        '',
+      const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS,
         {
-          method: 'POST',
+          method: 'GET',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include'
         }
@@ -141,8 +140,6 @@ string,
     }
   }
 );
-
-
 
 const postsSlice = createSlice({
   name: 'postsSlice',

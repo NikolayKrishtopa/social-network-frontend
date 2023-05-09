@@ -12,8 +12,8 @@ export default function App () {
       <Route path='/' element={<Main/>}/>
       <Route path='/users' element={<Users/>}/>
       <Route path='/posts' element={<Posts/>}/>
-      <Route path='/login' element={<Auth/>}/>
-      <Route path='/register' element={<Auth/>}/>
+      <Route path='/login' element={<Auth mode='login'/>}/>
+      <Route path='/register' element={<Auth mode='register'/>}/>
       <Route path='/profile' element={<Profile/>}/>
     </Routes>
 

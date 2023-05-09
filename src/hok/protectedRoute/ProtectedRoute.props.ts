@@ -1,3 +1,6 @@
-import { type LayoutProps } from '../Layout/Layout.props';
+import { ReactElement } from 'react';
 
-export type ProtectedRouteProps = LayoutProps
+export interface ProtectedRouteProps {
+	protectFrom: 'logged' | 'unlogged'
+	children: ReactElement
+}

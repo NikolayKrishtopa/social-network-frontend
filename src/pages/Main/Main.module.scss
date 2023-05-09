@@ -101,28 +101,5 @@
 }
 
 .button {
-  border: none;
-  padding: 15px 45px;
-  background-color: $gold;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: 0.06em;
-  text-align: left;
-  border-radius: 26px;
-  color: $font-button-color;
-  background-color: $gold;
-  text-decoration: none;
-  box-sizing: border-box;
-  text-align: center;
-  display: inline-block;
-  transition: background-color 0.5s ease;
-  cursor: pointer;
-  font-family: 'Georgia', serif;
-
-  @media (hover: none) {
-    background-color: $gold;
-  }
-	&:hover {
-  background-color: $gold-hover;
-}
+@include button(strong);
 }
