@@ -140,11 +140,12 @@
     display: none;
     transition: transform 0.5s ease;
   }
-  &_open {
-    display: flex;
-    // transform: none;
-  }
 }
+
+  .sidebar {
+    display: flex;
+  }
+
 .logo {
   display: flex;
   flex-direction: column;
@@ -236,11 +237,8 @@
   @media screen and (max-width: $breakpoint-extra-m) {
     display: flex;
   }
-  &_open {
+  &Open {
     transform: rotate(90deg);
-    .burger-btn-strip {
-      background-color: $gold;
-    }
   }
   &:hover {
     opacity: 0.5;

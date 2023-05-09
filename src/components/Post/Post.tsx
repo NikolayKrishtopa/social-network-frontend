@@ -26,7 +26,7 @@ export default function Post(props: PostProps) {
 
   return (
     <li className={s.post}>
-      <img src={image} alt='post' className={s.img} />
+      {image ? <img src={image} alt='post' className={s.img} /> : <div className={s.img}></div>}
       <p className={s.text}>{text}</p>
       <div className={s.likesContainer}>
         <button className={s.likeBtn} onClick={isLiked ? unlike : like}>

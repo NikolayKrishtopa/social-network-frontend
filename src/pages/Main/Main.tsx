@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
 
 export default function Main (){return(
-  <ProtectedRoute protectFrom='logged'>
-    <Layout withHeader={false}>
+  <Layout withHeader={false}>
+    <ProtectedRoute protectFrom='logged'>
       <div className={s.section}>
         <div className={s.container}>
           <div className={s.content}>
@@ -23,6 +23,6 @@ export default function Main (){return(
           </div>
         </div>
       </div>
-    </Layout>
-  </ProtectedRoute>
+    </ProtectedRoute>
+  </Layout>
 );}

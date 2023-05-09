@@ -8,9 +8,9 @@ import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
 export default function Auth (props: AuthPropsType){
   const {mode} = props;
   return(
-    <ProtectedRoute protectFrom='logged'>
-      <Layout withHeader={true}>
+    <Layout withHeader={true}>
+      <ProtectedRoute protectFrom='logged'>
         {mode === 'login' ? <Login/> : <Register/>}
-      </Layout>
-    </ProtectedRoute>
+      </ProtectedRoute>
+    </Layout>
   );}

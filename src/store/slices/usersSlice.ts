@@ -162,6 +162,7 @@ const usersSlice = createSlice({
       .addCase(addUserToFriends.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
+        state.systMsgUsers = SYSTEM_MESSAGES.CONNECT_SCSS;
       })
       .addCase(addUserToFriends.rejected, (state, { error }) => {
         state.isLoading = false;
@@ -174,6 +175,7 @@ const usersSlice = createSlice({
       .addCase(removeUserFromFriends.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
+        state.systMsgUsers = SYSTEM_MESSAGES.DISCONNECT_SCSS;
       })
       .addCase(removeUserFromFriends.rejected, (state, { error }) => {
         state.isLoading = false;

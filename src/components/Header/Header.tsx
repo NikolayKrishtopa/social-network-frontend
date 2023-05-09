@@ -1,14 +1,30 @@
 import React from 'react';
+import { useState } from 'react';
 import { HeaderPropsType } from './Header.props';
 import s from './Header.module.scss';
 import { NavLink } from 'react-router-dom';
-import cn from 'classnames';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
 import { logout } from '../../store/slices/authSlice';
+import burgerIcon from '../../assets/img/burger-icon.svg';
+import cn from 'classnames';
+
 
 export default function Header(props: HeaderPropsType) {
   const { isLogged, currentUser } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const openSideBar: ()=>void = ()=>{
+    setSidebarOpen(true);
+    window.addEventListener('resize', closeSideBar);
+    window.addEventListener('scroll', closeSideBar);
+  };
+
+  const closeSideBar: ()=>void = ()=>{
+    setSidebarOpen(false);
+    window.removeEventListener('resize', closeSideBar);
+    window.removeEventListener('scroll', closeSideBar);
+  };
 
   const handleLogout = () => {
     dispatch(logout({ withMsg: true }));
@@ -22,7 +38,7 @@ export default function Header(props: HeaderPropsType) {
             <h1 className={s.title}>Hard rock network</h1>
             <p className={s.subtitle}>вступай в сообщество</p>
           </NavLink>
-          <nav className={s.nav}>
+          <nav className={cn(s.nav, {[s.sidebar]: sidebarOpen})} onClick={closeSideBar}>
             <ul className={s.menu}>
               {isLogged ? (
                 <>
@@ -47,7 +63,7 @@ export default function Header(props: HeaderPropsType) {
                           : `${s.menuLink} ${s.clickable}`;
                       }}
                     >
-                      Посты
+                      Лента
                     </NavLink>
                   </li>
                   <li className={s.menuItem}>
@@ -101,7 +117,9 @@ export default function Header(props: HeaderPropsType) {
               )}
             </ul>
           </nav>
-          <button className={s.burgerBtn}></button>
+          <button className={cn(s.burgerBtn, {[s.burgerBtnOpen]: sidebarOpen})} onClick={sidebarOpen ? closeSideBar : openSideBar}>
+            <img src={burgerIcon} alt="extend sidebarbutton" />
+          </button>
         </div>
       </div>
     </header>

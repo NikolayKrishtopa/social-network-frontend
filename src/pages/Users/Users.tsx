@@ -18,11 +18,11 @@ export default function Users (){
       : dispatch(getFriends());
   }, [mode]);
   return(
-    <ProtectedRoute protectFrom='unlogged'>
-      <Layout withHeader={true}>
+    <Layout withHeader={true}>
+      <ProtectedRoute protectFrom='unlogged'>
         <ul className={s.container}>
           {users.map(u=> <UserCard key={u._id} user={u}/>)}
         </ul>
-      </Layout>
-    </ProtectedRoute>
+      </ProtectedRoute>
+    </Layout>
   );}

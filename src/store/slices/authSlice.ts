@@ -23,6 +23,7 @@ export const logout = createAsyncThunk<
     },
     credentials: 'include',
   });
+  
   return { withMsg };
 });
 export const login = createAsyncThunk<UserTypeExt, UserLoginType>(
@@ -164,7 +165,7 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLogged = true;
-        state.systMsgAuth = SYSTEM_MESSAGES.LOGOUT_SCSS;
+        state.systMsgAuth = action.payload.withMsg ? SYSTEM_MESSAGES.LOGOUT_SCSS : '';
         state.currentUser = {
           email: '',
           password: '',

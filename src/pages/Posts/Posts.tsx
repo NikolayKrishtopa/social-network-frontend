@@ -16,14 +16,14 @@ export default function Posts() {
   }, []);
 
   return (
-    <ProtectedRoute protectFrom='unlogged'>
-      <Layout withHeader={true}>
+    <Layout withHeader={true}>
+      <ProtectedRoute protectFrom='unlogged'>
         <div className={s.container}>
           {posts.map((p) => (
             <Post key={p._id} post={p} />
           ))}
         </div>
-      </Layout>
-    </ProtectedRoute>
+      </ProtectedRoute>
+    </Layout>
   );
 }
