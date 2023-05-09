@@ -51,7 +51,7 @@ export default function Login() {
             className={s.input}
             {...register('password', {
               required: 'Обязательное поле',
-              // validate: validatePassword,
+              validate: validatePassword,
             })}
           />
           <p className={s.error}>

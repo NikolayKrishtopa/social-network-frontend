@@ -23,7 +23,7 @@ export const logout = createAsyncThunk<
     },
     credentials: 'include',
   });
-  
+
   return { withMsg };
 });
 export const login = createAsyncThunk<UserTypeExt, UserLoginType>(
@@ -46,8 +46,8 @@ export const login = createAsyncThunk<UserTypeExt, UserLoginType>(
   }
 );
 
-export const register = createAsyncThunk<UserTypeExt, UserType>(
-  'auth/register',
+export const regUser = createAsyncThunk<UserTypeExt, UserType>(
+  'auth/regUser',
   async (payload, { dispatch, rejectWithValue }) => {
     const response = await fetch(BASE_URL + URL_ENDPOINTS.REGISTER, {
       method: 'POST',
@@ -165,7 +165,9 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLogged = true;
-        state.systMsgAuth = action.payload.withMsg ? SYSTEM_MESSAGES.LOGOUT_SCSS : '';
+        state.systMsgAuth = action.payload.withMsg
+          ? SYSTEM_MESSAGES.LOGOUT_SCSS
+          : '';
         state.currentUser = {
           email: '',
           password: '',
@@ -199,6 +201,10 @@ const authSlice = createSlice({
       });
   },
 });
-export const { startLoading, clearSystMsgAuth, logoutWithPopup, setCurrentUser } =
-  authSlice.actions;
+export const {
+  startLoading,
+  clearSystMsgAuth,
+  logoutWithPopup,
+  setCurrentUser,
+} = authSlice.actions;
 export default authSlice.reducer;
