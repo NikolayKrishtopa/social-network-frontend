@@ -124,7 +124,7 @@
   }
 }
 .nav {
-  @media screen and (max-width: $breakpoint-extra-m) {
+  @media screen and (max-width: $breakpoint-tablet) {
     // transform: translateX(100%);
     position: fixed;
     display: flex;
@@ -142,9 +142,9 @@
   }
 }
 
-  .sidebar {
-    display: flex;
-  }
+.sidebar {
+  display: flex;
+}
 
 .logo {
   display: flex;
@@ -180,7 +180,7 @@
   align-items: center;
   cursor: auto;
   transition: transform 0.5s ease;
-  @media screen and (max-width: $breakpoint-extra-m) {
+  @media screen and (max-width: $breakpoint-tablet) {
     flex-direction: column;
     gap: 40px;
     background-color: $font-button-color;
@@ -209,7 +209,7 @@
   border: none;
   background-color: transparent;
 
-  @media screen and (max-width: $breakpoint-extra-m) {
+  @media screen and (max-width: $breakpoint-tablet) {
     font-size: 32px;
     line-height: 51px;
     letter-spacing: 0px;
@@ -234,7 +234,7 @@
   z-index: 5;
   cursor: pointer;
 
-  @media screen and (max-width: $breakpoint-extra-m) {
+  @media screen and (max-width: $breakpoint-tablet) {
     display: flex;
   }
   &Open {
