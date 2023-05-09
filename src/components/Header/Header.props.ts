@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export type HeaderPropsType = {
-	onSideBarOpen: Dispatch<SetStateAction<boolean>>
-}
+  onSideBarOpen: Dispatch<SetStateAction<boolean>>;
+};

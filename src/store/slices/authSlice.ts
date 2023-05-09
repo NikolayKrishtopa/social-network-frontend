@@ -4,51 +4,38 @@ import URL_ENDPOINTS from '../../utils/url-endpoints';
 import SYSTEM_MESSAGES from '../../utils/system-messages';
 import BASE_URL from '../../utils/base-url';
 
-
 interface IAuthState {
-  currentUser: UserTypeExt | null
-  isLogged: boolean
-  error: null | string
-  isLoading: boolean
-  systMsgAuth: string
+  currentUser: UserTypeExt;
+  isLogged: boolean;
+  error: null | string;
+  isLoading: boolean;
+  systMsgAuth: string;
 }
 
 export const logout = createAsyncThunk<
-{withMsg: boolean},
-{withMsg: boolean}
->(
-  'auth/logout',
-  async ({withMsg}, { dispatch, rejectWithValue }) => {
-    const res = await fetch(
-      BASE_URL + URL_ENDPOINTS.LOGOUT,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-      }
-    );
-    return {withMsg};
-  }
-);
-export const login = createAsyncThunk<
-UserTypeExt,
-UserLoginType
->(
+  { withMsg: boolean },
+  { withMsg: boolean }
+>('auth/logout', async ({ withMsg }, { dispatch, rejectWithValue }) => {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.LOGOUT, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  return { withMsg };
+});
+export const login = createAsyncThunk<UserTypeExt, UserLoginType>(
   'auth/login',
   async (payload, { dispatch, rejectWithValue }) => {
-    const response = await fetch(
-      BASE_URL + URL_ENDPOINTS.LOGIN,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload),
-        credentials: 'include',
-      }
-    );
+    const response = await fetch(BASE_URL + URL_ENDPOINTS.LOGIN, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      credentials: 'include',
+    });
     if (response.ok) {
       const user = await response.json();
       return user;
@@ -58,22 +45,16 @@ UserLoginType
   }
 );
 
-export const register = createAsyncThunk<
-UserTypeExt,
-UserType
->(
+export const register = createAsyncThunk<UserTypeExt, UserType>(
   'auth/register',
   async (payload, { dispatch, rejectWithValue }) => {
-    const response = await fetch(
-      BASE_URL + URL_ENDPOINTS.REGISTER,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      }
-    );
+    const response = await fetch(BASE_URL + URL_ENDPOINTS.REGISTER, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
     if (response.ok) {
       const user = await response.json();
       return user;
@@ -84,37 +65,33 @@ UserType
 );
 
 export const checkAuth = createAsyncThunk<
-UserTypeExt,
-void,
-{ rejectValue: string }
->(
-  'auth/checkAuth',
-  async function (_, { dispatch, rejectWithValue }) {
-    try {
-      const res = await fetch(BASE_URL + URL_ENDPOINTS.USERS_ME, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
-      if (res.ok) {
-        const user = await res.json();
-        return user;
-      } else { 
-        dispatch(logout({withMsg:false}));
-        throw new Error(SYSTEM_MESSAGES.COOKIES_EXPIRED);
-      }
-    } catch (err: any) {
-      dispatch(logout({withMsg:false}));
-      return rejectWithValue(err.message);
+  UserTypeExt,
+  void,
+  { rejectValue: string }
+>('auth/checkAuth', async function (_, { dispatch, rejectWithValue }) {
+  try {
+    const res = await fetch(BASE_URL + URL_ENDPOINTS.USERS_ME, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    if (res.ok) {
+      const user = await res.json();
+      return user;
+    } else {
+      dispatch(logout({ withMsg: false }));
+      throw new Error(SYSTEM_MESSAGES.COOKIES_EXPIRED);
     }
+  } catch (err: any) {
+    dispatch(logout({ withMsg: false }));
+    return rejectWithValue(err.message);
   }
-);
-
+});
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    currentUser: null,
+    currentUser: {},
     isLogged: false,
     error: null,
     isLoading: false,
@@ -124,14 +101,28 @@ const authSlice = createSlice({
     startLoading: (state) => {
       state.isLoading = true;
     },
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
     logoutWithPopup: (state) => {
       state.isLogged = false;
-      state.currentUser = null;
+      state.currentUser = {
+        email: '',
+        password: '',
+        name: '',
+        city: '',
+        college: '',
+        avatar: '',
+        status: '',
+        gender: '',
+        _id: '',
+        friends: [],
+      };
       state.systMsgAuth = SYSTEM_MESSAGES.LOGOUT_SCSS;
     },
     clearSystMsgAuth: (state) => {
       state.systMsgAuth = '';
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -174,21 +165,39 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLogged = true;
         state.systMsgAuth = SYSTEM_MESSAGES.LOGOUT_SCSS;
-        state.currentUser = null;
+        state.currentUser = {
+          email: '',
+          password: '',
+          name: '',
+          city: '',
+          college: '',
+          avatar: '',
+          status: '',
+          gender: '',
+          _id: '',
+          friends: [],
+        };
         state.isLogged = false;
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.error = `${action.error.name}: ${action.error.message}`;
-        state.currentUser = null;
+        state.currentUser = {
+          email: '',
+          password: '',
+          name: '',
+          city: '',
+          college: '',
+          avatar: '',
+          status: '',
+          gender: '',
+          _id: '',
+          friends: [],
+        };
         state.isLogged = false;
       });
-      
-  }
+  },
 });
-export const {
-  startLoading,
-  clearSystMsgAuth,
-  logoutWithPopup,
-} = authSlice.actions;
+export const { startLoading, clearSystMsgAuth, logoutWithPopup, setCurrentUser } =
+  authSlice.actions;
 export default authSlice.reducer;

@@ -84,7 +84,6 @@ string,
 >(
   'posts/likePost',
   async function (id, { dispatch, rejectWithValue }) {
-    dispatch(startLoading());
     try {
       const res = await fetch(
         BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
@@ -116,7 +115,6 @@ string,
 >(
   'posts/unlikePost',
   async function (id, { dispatch, rejectWithValue }) {
-    dispatch(startLoading());
     try {
       const res = await fetch(
         BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
@@ -185,6 +183,49 @@ const postsSlice = createSlice({
         ];
       })
       .addCase(getPosts.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = `${error.name}: ${error.message}`;
+      })
+      .addCase(addPost.pending, (state) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+      .addCase(addPost.fulfilled, (state, action) => {
+        state.error = null;
+        state.isLoading = false;
+        state.posts = [action.payload,
+          ...state.posts
+        ];
+      })
+      .addCase(addPost.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = `${error.name}: ${error.message}`;
+      })
+      .addCase(likePost.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.error = null;
+        state.isLoading = false;
+        state.posts = [
+          ...state.posts.map(p => p._id === action.payload._id ? action.payload : p)
+        ];
+      })
+      .addCase(likePost.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = `${error.name}: ${error.message}`;
+      })
+      .addCase(unlikePost.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(unlikePost.fulfilled, (state, action) => {
+        state.error = null;
+        state.isLoading = false;
+        state.posts = [
+          ...state.posts.map(p => p._id === action.payload._id ? action.payload : p)
+        ];
+      })
+      .addCase(unlikePost.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = `${error.name}: ${error.message}`;
       });

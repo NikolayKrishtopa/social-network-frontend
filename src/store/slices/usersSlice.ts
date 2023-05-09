@@ -3,6 +3,7 @@ import URL_ENDPOINTS from '../../utils/url-endpoints';
 import SYSTEM_MESSAGES from '../../utils/system-messages';
 import { UserTypeExt } from '../../models/models';
 import BASE_URL from '../../utils/base-url';
+import { setCurrentUser } from './authSlice';
 
 interface IUsersState {
   users: Array<UserTypeExt>
@@ -67,7 +68,7 @@ string,
 >('about/addUserToFriends', async function (id, { dispatch, rejectWithValue }) {
   try {
     const res = await fetch(
-      `${BASE_URL}${URL_ENDPOINTS.FRIENDS}/${id}/connect`,
+      `${BASE_URL}${URL_ENDPOINTS.USERS}/${id}/connect`,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -78,6 +79,7 @@ string,
       throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
     }
     const user = await res.json();
+    dispatch(setCurrentUser(user));
     return user;
   } catch (err: any) {
     return rejectWithValue(err.message);
@@ -91,7 +93,7 @@ string,
 >('about/removeUserFromFriends', async function (id, { dispatch, rejectWithValue }) {
   try {
     const res = await fetch(
-      `${BASE_URL}${URL_ENDPOINTS.FRIENDS}/${id}/connect`,
+      `${BASE_URL}${URL_ENDPOINTS.USERS}/${id}/connect`,
       {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -102,6 +104,7 @@ string,
       throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
     }
     const user = await res.json();
+    dispatch(setCurrentUser(user));
     return user;
   } catch (err: any) {
     return rejectWithValue(err.message);
@@ -159,7 +162,6 @@ const usersSlice = createSlice({
       .addCase(addUserToFriends.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
-        state.users = [...state.users.filter(u=>u._id !== action.payload._id), action.payload];
       })
       .addCase(addUserToFriends.rejected, (state, { error }) => {
         state.isLoading = false;
@@ -172,7 +174,6 @@ const usersSlice = createSlice({
       .addCase(removeUserFromFriends.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
-        state.users = [...state.users.filter(u=>u._id !== action.payload._id), action.payload];
       })
       .addCase(removeUserFromFriends.rejected, (state, { error }) => {
         state.isLoading = false;

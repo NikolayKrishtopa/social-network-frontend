@@ -7,10 +7,9 @@ import { UserLoginType } from '../../models/models';
 import validatePassword from '../../utils/validatePassword';
 import cn from 'classnames';
 
-export default function Login(){
-  
+export default function Login() {
   const dispatch = useAppDispatch();
-  
+
   const {
     register,
     formState: { errors, isValid },
@@ -23,12 +22,13 @@ export default function Login(){
     reset();
   };
 
-  return(
+  return (
     <section className={s.section}>
       <form className={s.form} onSubmit={handleSubmit(onSubmitLogin)}>
         <label className={s.label}>
-          <input type="text" 
-            placeholder="Адрес электронной почты" 
+          <input
+            type='text'
+            placeholder='Адрес электронной почты'
             {...register('email', {
               required: 'Обязательное поле',
               minLength: {
@@ -39,25 +39,31 @@ export default function Login(){
                 value: 30,
                 message: 'Максимальная длина 30 символов',
               },
-            })}className={s.input} />
+            })}
+            className={s.input}
+          />
           <p className={s.error}>{errors?.email?.message}</p>
         </label>
         <label className={s.label}>
-          <input type="password" 
-            placeholder="Пароль" 
-            className={s.input} 
+          <input
+            type='password'
+            placeholder='Пароль'
+            className={s.input}
             {...register('password', {
               required: 'Обязательное поле',
               // validate: validatePassword,
-            })}/>
-          <p className={s.error}> 
-            {errors.password && 
+            })}
+          />
+          <p className={s.error}>
+            {errors.password &&
               (errors?.password?.message ||
-                'от 8 до 20 символов, минимум две цифры, минимум одна заглавная латинская буква')}</p>
+                'от 8 до 20 символов, минимум две цифры, минимум одна заглавная латинская буква')}
+          </p>
         </label>
         <button className={cn(s.button, { [s.inactiveBtn]: !isValid })}>
           Войти
         </button>
       </form>
     </section>
-  );}
+  );
+}

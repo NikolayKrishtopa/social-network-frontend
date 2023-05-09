@@ -15,16 +15,13 @@ export default function PopupSystemMessage(props: PopupSystMsgProps) {
 
   // System messages through the entire store
   const { systMsgAuth } = useAppSelector((state) => state.auth);
-  const { systMsgPosts} = useAppSelector((state) => state.posts);
+  const { systMsgPosts } = useAppSelector((state) => state.posts);
   const { systMsgUsers } = useAppSelector((state) => state.users);
 
   const externalSystMsgToShow = externalSystMsg ? externalSystMsg : '';
 
   const message =
-    systMsgAuth +
-    systMsgPosts +
-    systMsgUsers +
-    externalSystMsgToShow;
+    systMsgAuth + systMsgPosts + systMsgUsers + externalSystMsgToShow;
 
   const resetSystMsg = () => {
     dispatch(clearSystMsgPosts());

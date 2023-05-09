@@ -15,7 +15,7 @@ export default function ProtectedRoute (props: ProtectedRouteProps) {
   const isBlocked = (!isLogged && protectFrom==='unlogged') || (isLogged && protectFrom==='logged');
 
   useEffect(() => {
-    if (!isLogged && protectFrom==='unlogged') navigate('/auth');
+    if (!isLogged && protectFrom==='unlogged') navigate('/login');
     if (isLogged && protectFrom==='logged') navigate('/profile');
   }, [isLogged]);
   return <>{!isBlocked && props.children}</>;

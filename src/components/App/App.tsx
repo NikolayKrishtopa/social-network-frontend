@@ -5,6 +5,7 @@ import Posts from '../../pages/Posts/Posts';
 import Auth from '../../pages/Auth/Auth';
 import Profile from '../../pages/Profile/Profile';
 import Main from '../../pages/Main/Main';
+import NotFound from '../../pages/NotFound/NotFound';
 
 export default function App () {
   return (
@@ -15,6 +16,7 @@ export default function App () {
       <Route path='/login' element={<Auth mode='login'/>}/>
       <Route path='/register' element={<Auth mode='register'/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/*' element={<NotFound/>}/>
     </Routes>
 
   );

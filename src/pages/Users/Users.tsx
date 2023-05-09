@@ -3,6 +3,8 @@ import Layout from '../../hok/Layout/Layout';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { getUsers, getFriends } from '../../store/slices/usersSlice';
 import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
+import UserCard from '../../components/UserCard/UserCard';
+import s from './Users.module.scss';
 
 export default function Users (){
   const dispatch = useAppDispatch();
@@ -18,7 +20,9 @@ export default function Users (){
   return(
     <ProtectedRoute protectFrom='unlogged'>
       <Layout withHeader={true}>
-        {users.map(u=> <h1 key={u._id}>{u.name}</h1>)}
+        <ul className={s.container}>
+          {users.map(u=> <UserCard key={u._id} user={u}/>)}
+        </ul>
       </Layout>
     </ProtectedRoute>
   );}

@@ -1,0 +1,43 @@
+@import '../../styles/globalVariables.scss';
+
+.page {
+  @include section;
+  align-items: center;
+  background: $background-header;
+}
+.container {
+  height: 100vh;
+  display: flex;
+  max-width: 700px;
+  width: 70%;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: $breakpointMobile) {
+    width: 90%;
+  }
+}
+.text {
+  color: $gold;
+  font-size: 60px;
+  text-align: center;
+  margin: 0;
+}
+.link {
+  @include clickable;
+  font-family: 'Arial';
+  color: $white;
+  font-size: 32px;
+  text-decoration: none;
+  padding: 0;
+  font-weight: 700;
+  border-bottom: 2px solid $dark-extra;
+  @media screen and (max-width: $breakpointTablet) {
+    font-size: 24px;
+  }
+  @media screen and (max-width: $breakpointMobile) {
+    font-size: 18px;
+  }
+}
+

@@ -1,17 +1,17 @@
 @import '../../styles/globalVariables.scss';
 
-.section{
-	@include section;
-	padding-top: 40px;
-	padding-bottom: 40px;
-	align-items: center;
-	min-height: calc(100vh - 120px);
+.section {
+  @include section;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  align-items: center;
+  min-height: calc(100vh - 120px);
 }
-.form{
-	min-width: 500px;
-	display: flex;
-	flex-direction: column;
-	gap: 40px;
+.form {
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 // .registerForm{
 // 	min-width: 800px;
@@ -19,32 +19,32 @@
 // 	grid-template-columns: repeat(2, 1fr)
 // }
 
-.label{
-	@include text($primary-dark);
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	position: relative;
+.label {
+  @include text($primary-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
 }
 
-.input{
-	@include input($dark-extra);
+.input {
+  @include input($dark-extra);
 }
 
-.error{
-	position: absolute;
-	left: 0;
-	margin: 0;
-	bottom: -35px;
-	min-height: 28px;
-	color: red;
-	font-size: 12px;
-	line-height: 16px;
+.error {
+  position: absolute;
+  left: 0;
+  margin: 0;
+  bottom: -35px;
+  min-height: 28px;
+  color: red;
+  font-size: 12px;
+  line-height: 16px;
 }
-.button{
-	@include button(weak);
+.button {
+  @include button(weak);
 }
 
-.inactiveBtn{
-	@include inactiveBtn;
+.inactiveBtn {
+  @include inactiveBtn;
 }

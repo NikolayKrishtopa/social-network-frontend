@@ -4,19 +4,26 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { getPosts } from '../../store/slices/postsSlice';
 import { useEffect } from 'react';
 import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
+import Post from '../../components/Post/Post';
+import s from './Posts.module.scss';
 
-export default function Posts (){
+export default function Posts() {
   const dispatch = useAppDispatch();
-  const {posts} = useAppSelector(state => state.posts);
+  const { posts } = useAppSelector((state) => state.posts);
 
   useEffect(() => {
     dispatch(getPosts());
   }, []);
 
-  return(
+  return (
     <ProtectedRoute protectFrom='unlogged'>
       <Layout withHeader={true}>
-        {posts.map(p  => <h1 key={p._id}>{p.text}</h1>)}
+        <div className={s.container}>
+          {posts.map((p) => (
+            <Post key={p._id} post={p} />
+          ))}
+        </div>
       </Layout>
     </ProtectedRoute>
-  );}
+  );
+}

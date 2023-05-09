@@ -1,6 +1,5 @@
 @import '../../styles/globalVariables.scss';
 
-
 .widthLimiter {
   width: 100%;
   max-width: $max-width;
@@ -24,7 +23,6 @@
     padding: 0 10px;
   }
 }
-
 
 .container {
   display: grid;
@@ -209,7 +207,7 @@
   color: $font-extra-color;
   border: none;
   background-color: transparent;
-  
+
   @media screen and (max-width: $breakpoint-extra-m) {
     font-size: 32px;
     line-height: 51px;
@@ -252,12 +250,12 @@
   }
 }
 
-.active{
+.active {
   border-bottom: 3px solid $gold;
   pointer-events: none;
-    color: $active-link-color;
+  color: $active-link-color;
 }
 
-.clickable{
-  @include clickable
+.clickable {
+  @include clickable;
 }
