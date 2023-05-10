@@ -2,14 +2,15 @@
 
 .section {
   background-image: url('../../assets/img/main_background.jpg');
-	background-position: center top;
-	background-repeat: no-repeat;
-	background-size: cover;
+  background-position: 40% top;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: $white;
   width: 100%;
-	height: 100vh;
+  height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  align-items: center;
   padding: 0 $side-padding;
   box-sizing: border-box;
   @media screen and (max-width: $breakpoint-tablet) {
@@ -20,25 +21,6 @@
   }
   @media screen and (max-width: $breakpoint-mobile) {
     padding: 0 10px;
-  }
-}
-.container {
-	width: 100%;
-	max-width: $max-width;
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 42px;
-  text-transform: none;
-  padding-top: 60px;
-  align-items: end;
-  @media screen and (max-width: $breakpoint-tablet) {
-    grid-template-columns: 1fr;
-    gap: 100px;
-    justify-items: center;
-    padding-top: 30px;
-  }
-  @media screen and (max-width: $breakpoint-mobile) {
-    gap: 105px;
   }
 }
 .title {
@@ -52,54 +34,45 @@
   color: $gold;
   text-transform: uppercase;
   @media screen and (max-width: $breakpoint-mobile-big) {
-    font-size: 32px;
-    line-height: 40px;
-  }
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: 25px;
-    line-height: 32px;
-    text-align: center;
-    max-width: 200px;
-    letter-spacing: 0.06em;
+    font-size: 46px;
+    line-height: 60px;
   }
 }
 .subtitle {
   margin: 0;
-  font-family: 'Arial';
+  font-family: $font-content;
   font-size: 22px;
   line-height: 32px;
   letter-spacing: 0px;
   text-align: left;
   max-width: 460px;
   color: #cdcdcd;
-  @media screen and (max-width: $breakpoint-mobile) {
-    text-align: center;
+  @media screen and (max-width: $breakpoint-mobile-big) {
+    font-size: 18px;
+    line-height: 1.2;
   }
 }
 .content {
-  padding: 0 0 80px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 42px;
-  align-self: center;
-  @media screen and (max-width: $breakpoint-tablet) {
-    max-width: 460px;
-    padding-bottom: 0;
-  }
-  @media screen and (max-width: $breakpoint-mobile) {
-    align-items: center;
+
+  @media screen and (max-width: $breakpoint-mobile-big) {
+    max-width: 80%;
   }
 }
 .btnWrapper {
-	display: flex;
-	gap: 20px;
-  @media screen and (max-width: $breakpoint-tablet) {
-    display: flex;
-		gap: 20px;
-    justify-content: center;
+  display: flex;
+  gap: 20px;
+  @media screen and (max-width: $breakpoint-mobile-big) {
+    flex-direction: column;
   }
 }
 
 .button {
-@include button(strong);
+  @include button(strong);
+  @media screen and (max-width: $breakpoint-mobile-big) {
+    padding: 10px 15px;
+  }
 }

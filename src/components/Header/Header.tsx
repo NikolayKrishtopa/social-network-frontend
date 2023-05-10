@@ -34,8 +34,8 @@ export default function Header() {
       <div className={s.widthLimiter}>
         <div className={s.navbar}>
           <NavLink to='/' className={s.logo + ' ' + s.clickable}>
-            <h1 className={s.title}>Hard rock network</h1>
-            <p className={s.subtitle}>вступай в сообщество</p>
+            <h1 className={s.title}>jazz</h1>
+            <p className={s.subtitle}>wellcome</p>
           </NavLink>
           <nav
             className={cn(s.nav, { [s.sidebar]: sidebarOpen })}

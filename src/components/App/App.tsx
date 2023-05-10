@@ -13,6 +13,7 @@ import { checkAuth } from '../../store/slices/authSlice';
 import s from './App.module.scss';
 import SpinnerLds from '../../components/UI/SpinnerLds/SpinnerLds';
 import PopupSystemMessage from '../../components/PopupSystemMessage/PopupSystemMessage';
+import '../../index.scss';
 
 import cn from 'classnames';
 

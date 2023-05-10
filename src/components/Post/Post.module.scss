@@ -1,17 +1,27 @@
 @import '../../styles/globalVariables.scss';
 
 .post {
+  width: 100%;
   display: grid;
-  grid-template-columns: 100px 1fr 40px;
+  grid-template-columns: 150px 1fr 40px;
   gap: 20px;
   padding: 10px;
-  min-width: 400px;
   max-width: 600px;
   position: relative;
   border: $primary-dark 2px solid;
   border-radius: 10px;
   box-sizing: border-box;
   background-color: $white;
+  @media screen and (max-width: $breakpoint-tablet) {
+    gap: 10px;
+  }
+  @media screen and (max-width: $breakpoint-mobile) {
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+}
+.withoutImg {
+  grid-template-columns: 1fr 40px;
 }
 
 .text {
@@ -19,8 +29,8 @@
 }
 
 .img {
-  height: 100px;
-  width: 100px;
+  width: 100%;
+  aspect-ratio: 1;
   border-radius: 5%;
   align-self: center;
 }
@@ -31,6 +41,7 @@
   justify-content: center;
   gap: 5px;
   align-self: end;
+  justify-self: end;
 }
 
 .likeBtn {

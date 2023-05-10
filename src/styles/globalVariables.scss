@@ -11,7 +11,7 @@ $background-header: radial-gradient(
   #5b483a 0%,
   #262425 100%
 );
-$background-light-grey: #d1d1d1;
+$background-light-grey: #f6f6f6;
 $background-grey: #c3c3c3;
 $font-content: 'Arial', serif;
 $active-link-color: #fafafa;
@@ -24,7 +24,7 @@ $gold-hover: #fddcc4;
 // breakpoints
 $breakpoint-desktop: 1300px;
 $breakpoint-tablet: 800px;
-$breakpoint-mobile-big: 600px;
+$breakpoint-mobile-big: 650px;
 $breakpoint-mobile: 480px;
 
 $transition-duration: 0.5s;
@@ -46,22 +46,26 @@ $decor: 30px;
   position: relative;
 }
 
-@mixin section {
+@mixin section($color) {
+  background-color: $color;
   width: 100%;
-  max-width: $max-width;
-  background-color: transparent;
+  min-height: calc(100vh - 120px);
   margin: 0;
-  padding: 0 42px;
+  padding: 50px 42px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   box-sizing: border-box;
   position: relative;
   @media (max-width: $breakpoint-tablet) {
     padding-left: 20px;
     padding-right: 20px;
+  }
+  @media (max-width: $breakpoint-mobile) {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
@@ -150,29 +154,28 @@ $decor: 30px;
   display: inline-block;
   transition: background-color 0.5s ease;
   cursor: pointer;
-  font-family: 'Georgia', serif;
+  font-family: $font-accent;
+  box-sizing: content-box;
+  &:hover {
+    background-color: $gold-hover;
+  }
   @if $type == weak {
     border: 2px solid $gold;
     background-color: transparent;
-    @media (hover: none) {
-      background-color: transparent;
-    }
   }
   @if $type == strong {
     background-color: $gold;
     border: none;
   }
   @media (hover: none) {
-    @if $type == weak {
-      border: 2px solid $gold;
-      background-color: transparent;
-      @media (hover: none) {
+    &:hover {
+      @if $type == strong {
+        background-color: $gold;
+      }
+      @if $type == weak {
         background-color: transparent;
       }
     }
-  }
-  &:hover {
-    background-color: $gold-hover;
   }
 }
 

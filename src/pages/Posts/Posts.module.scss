@@ -1,12 +1,11 @@
 @import '../../styles/globalVariables.scss';
 
 .section {
-  @include section;
+  @include section($background-grey);
   width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
   align-items: center;
-  background-color: $background-light-grey;
   gap: 30px;
 }
 .title {
@@ -20,5 +19,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
 }

@@ -5,139 +5,122 @@ import { PostType } from '../../models/models';
 import BASE_URL from '../../utils/base-url';
 
 interface IPostsState {
-  posts: Array<PostType>
-  postsPageNo: number
-  error: null | string
-  isLoading: boolean
-  systMsgPosts: string
+  posts: Array<PostType>;
+  postsPageNo: number;
+  error: null | string;
+  isLoading: boolean;
+  systMsgPosts: string;
 }
 
 export const getPosts = createAsyncThunk<
-Array<PostType>,
-void,
-{ rejectValue: string }
->(
-  'posts/getPosts',
-  async function (_, { dispatch, rejectWithValue }) {
-    dispatch(startLoading());
-    try {
-      const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include'
-        }
-      );
-      if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error(SYSTEM_MESSAGES.ERROR_404);
-        } else {
-          throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
-        }
+  Array<PostType>,
+  void | 'string',
+  { rejectValue: string }
+>('posts/getPosts', async function (userId, { dispatch, rejectWithValue }) {
+  dispatch(startLoading());
+  try {
+    const param = typeof userId === 'string' ? userId : '';
+    const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS + param, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error(SYSTEM_MESSAGES.ERROR_404);
+      } else {
+        throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
       }
-      const postsList = await res.json();
-      return postsList;
-    } catch (err: any) {
-      return rejectWithValue(err.message);
     }
+    const postsList = await res.json();
+    return postsList;
+  } catch (err: any) {
+    return rejectWithValue(err.message);
   }
-);
-
+});
 
 export const addPost = createAsyncThunk<
-PostType,
-{text: string},
-{ rejectValue: string }
->(
-  'posts/addPost',
-  async function (post, { dispatch, rejectWithValue }) {
-    dispatch(startLoading());
-    try {
-      const res = await fetch(
-        BASE_URL + URL_ENDPOINTS.POSTS,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(post)
-        }
-      );
-      if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error(SYSTEM_MESSAGES.ERROR_404);
-        } else {
-          throw new Error(SYSTEM_MESSAGES.ADD_POSTS_FAIL);
-        }
+  PostType,
+  { text: string },
+  { rejectValue: string }
+>('posts/addPost', async function (post, { dispatch, rejectWithValue }) {
+  dispatch(startLoading());
+  try {
+    const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(post),
+    });
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error(SYSTEM_MESSAGES.ERROR_404);
+      } else {
+        throw new Error(SYSTEM_MESSAGES.ADD_POSTS_FAIL);
       }
-      const posts = await res.json();
-      return posts;
-    } catch (err: any) {
-      return rejectWithValue(err.message);
     }
+    const posts = await res.json();
+    return posts;
+  } catch (err: any) {
+    return rejectWithValue(err.message);
   }
-);
+});
 
 export const likePost = createAsyncThunk<
-PostType,
-string,
-{ rejectValue: string }
->(
-  'posts/likePost',
-  async function (id, { dispatch, rejectWithValue }) {
-    try {
-      const res = await fetch(
-        BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
-        {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
-      if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error(SYSTEM_MESSAGES.ERROR_404);
-        } else {
-          throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
-        }
+  PostType,
+  string,
+  { rejectValue: string }
+>('posts/likePost', async function (id, { dispatch, rejectWithValue }) {
+  try {
+    const res = await fetch(
+      BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
       }
-      const posts = await res.json();
-      return posts;
-    } catch (err: any) {
-      return rejectWithValue(err.message);
+    );
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error(SYSTEM_MESSAGES.ERROR_404);
+      } else {
+        throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
+      }
     }
+    const posts = await res.json();
+    return posts;
+  } catch (err: any) {
+    return rejectWithValue(err.message);
   }
-);
+});
 
 export const unlikePost = createAsyncThunk<
-PostType,
-string,
-{ rejectValue: string }
->(
-  'posts/unlikePost',
-  async function (id, { dispatch, rejectWithValue }) {
-    try {
-      const res = await fetch(
-        BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
-        {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
-      if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error(SYSTEM_MESSAGES.ERROR_404);
-        } else {
-          throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
-        }
+  PostType,
+  string,
+  { rejectValue: string }
+>('posts/unlikePost', async function (id, { dispatch, rejectWithValue }) {
+  try {
+    const res = await fetch(
+      BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
+      {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
       }
-      const posts = await res.json();
-      return posts;
-    } catch (err: any) {
-      return rejectWithValue(err.message);
+    );
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error(SYSTEM_MESSAGES.ERROR_404);
+      } else {
+        throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
+      }
     }
+    const posts = await res.json();
+    return posts;
+  } catch (err: any) {
+    return rejectWithValue(err.message);
   }
-);
+});
 
 const postsSlice = createSlice({
   name: 'postsSlice',
@@ -159,7 +142,8 @@ const postsSlice = createSlice({
       state.postsPageNo += 1;
     },
     cleanPosts: (state) => {
-      state.postsPageNo = 1; 1;
+      state.postsPageNo = 1;
+      1;
       state.error = null;
       state.isLoading = false;
       state.systMsgPosts = '';
@@ -179,7 +163,7 @@ const postsSlice = createSlice({
           ...state.posts,
           ...action.payload.filter(
             (e) => !state.posts.some((c) => c._id === e._id)
-          )
+          ),
         ];
       })
       .addCase(getPosts.rejected, (state, { error }) => {
@@ -193,9 +177,7 @@ const postsSlice = createSlice({
       .addCase(addPost.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
-        state.posts = [action.payload,
-          ...state.posts
-        ];
+        state.posts = [action.payload, ...state.posts];
       })
       .addCase(addPost.rejected, (state, { error }) => {
         state.isLoading = false;
@@ -208,7 +190,9 @@ const postsSlice = createSlice({
         state.error = null;
         state.isLoading = false;
         state.posts = [
-          ...state.posts.map(p => p._id === action.payload._id ? action.payload : p)
+          ...state.posts.map((p) =>
+            p._id === action.payload._id ? action.payload : p
+          ),
         ];
       })
       .addCase(likePost.rejected, (state, { error }) => {
@@ -222,19 +206,17 @@ const postsSlice = createSlice({
         state.error = null;
         state.isLoading = false;
         state.posts = [
-          ...state.posts.map(p => p._id === action.payload._id ? action.payload : p)
+          ...state.posts.map((p) =>
+            p._id === action.payload._id ? action.payload : p
+          ),
         ];
       })
       .addCase(unlikePost.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = `${error.name}: ${error.message}`;
       });
-  }
+  },
 });
-export const {
-  startLoading,
-  clearSystMsgPosts,
-  incPostsPage,
-  cleanPosts
-} = postsSlice.actions;
+export const { startLoading, clearSystMsgPosts, incPostsPage, cleanPosts } =
+  postsSlice.actions;
 export default postsSlice.reducer;

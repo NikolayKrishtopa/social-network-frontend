@@ -6,6 +6,7 @@ import likeIconChecked from '../../assets/img/like_icon_checked.svg';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
 import { likePost } from '../../store/slices/postsSlice';
 import { unlikePost } from '../../store/slices/postsSlice';
+import cn from 'classnames';
 
 export default function Post(props: PostProps) {
   const { image, text, likes, _id: postId } = props.post;
@@ -25,12 +26,8 @@ export default function Post(props: PostProps) {
   };
 
   return (
-    <li className={s.post}>
-      {image ? (
-        <img src={image} alt='post' className={s.img} />
-      ) : (
-        <div className={s.img}></div>
-      )}
+    <li className={cn(s.post, { [s.withoutImg]: !image })}>
+      {image && <img src={image} alt='post' className={s.img} />}
       <p className={s.text}>{text}</p>
       <div className={s.likesContainer}>
         <button className={s.likeBtn} onClick={isLiked ? unlike : like}>

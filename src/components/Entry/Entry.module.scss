@@ -1,11 +1,12 @@
 @import '../../styles/globalVariables.scss';
 
 .section {
-  @include section;
+  @include section($white);
   padding-top: 40px;
   padding-bottom: 40px;
   align-items: center;
   min-height: calc(100vh - 120px);
+  justify-content: center;
 }
 .form {
   width: 100%;

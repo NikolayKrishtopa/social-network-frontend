@@ -1,9 +1,8 @@
 @import '../../styles/globalVariables.scss';
 
 .page {
-  @include section;
+  @include section($background-header);
   align-items: center;
-  background: $background-header;
 }
 .container {
   height: 100vh;
@@ -40,4 +39,3 @@
     font-size: 18px;
   }
 }
-

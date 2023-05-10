@@ -1,10 +1,10 @@
 @import '../../styles/globalVariables.scss';
 
-.container{
-	@include section;
-	padding-top: 50px;
-	padding-bottom: 50px;
-	display: grid;
-	grid-template-columns: repeat(4, 270px);
-	gap: 20px;
+.container {
+  @include section($background-grey);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  gap: 20px;
 }
