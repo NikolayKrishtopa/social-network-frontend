@@ -23,7 +23,7 @@
   opacity: 0;
   transform: scale(0);
   transition: opacity 1s ease, transform 1s ease;
-  @media screen and (max-width: $breakpointMobile) {
+  @media screen and (max-width: $breakpoint-mobile) {
     right: 50px;
   }
   @media (max-width: 400px) {
@@ -39,10 +39,10 @@
     background-color: $gold;
     width: 100%;
     animation: statusBar 3s linear;
-    @media screen and (max-width: $breakpointTablet) {
+    @media screen and (max-width: $breakpoint-tablet) {
       height: 30px;
     }
-    @media screen and (max-width: $breakpointMobile) {
+    @media screen and (max-width: $breakpoint-mobile) {
       height: 20px;
     }
   }
@@ -61,27 +61,19 @@
   cursor: auto;
   position: relative;
   border: 2px solid #fff;
-  @media screen and (max-width: $breakpointDesktop) {
+  @media screen and (max-width: $breakpoint-desktop) {
     width: 300px;
   }
-  @media screen and (max-width: $breakpointTablet) {
+  @media screen and (max-width: $breakpoint-tablet) {
     width: 250px;
   }
   &::after {
     content: '';
-    @include decorSizeS;
+    @include decor;
     background-color: $gold;
     position: absolute;
-    right: -$decorSmall;
-    bottom: -$decorSmall;
-    @media screen and (max-width: $breakpointDesktop) {
-      right: -$decorSmallTab;
-      bottom: -$decorSmallTab;
-    }
-    @media screen and (max-width: $breakpointTablet) {
-      right: -$decorSmallMob;
-      bottom: -$decorSmallMob;
-    }
+    right: -$decor;
+    bottom: -$decor;
   }
 }
 
@@ -95,11 +87,11 @@
   background-color: transparent;
   text-transform: uppercase;
   text-align: center;
-  @media screen and (max-width: $breakpointDesktop) {
+  @media screen and (max-width: $breakpoint-desktop) {
     font-size: 24px;
     line-height: 32px;
   }
-  @media (max-width: $breakpointMobile) {
+  @media (max-width: $breakpoint-mobile) {
     padding: 15px 15px 8px;
     font-size: 16px;
     line-height: 24px;

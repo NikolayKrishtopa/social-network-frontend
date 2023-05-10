@@ -26,7 +26,11 @@ export default function Post(props: PostProps) {
 
   return (
     <li className={s.post}>
-      {image ? <img src={image} alt='post' className={s.img} /> : <div className={s.img}></div>}
+      {image ? (
+        <img src={image} alt='post' className={s.img} />
+      ) : (
+        <div className={s.img}></div>
+      )}
       <p className={s.text}>{text}</p>
       <div className={s.likesContainer}>
         <button className={s.likeBtn} onClick={isLiked ? unlike : like}>
@@ -36,7 +40,7 @@ export default function Post(props: PostProps) {
             className={s.likeIcon}
           />
         </button>
-        <p className={s.likesQty}>{likes.length}</p>
+        <span className={s.likesQty}>{likes.length}</span>
       </div>
     </li>
   );

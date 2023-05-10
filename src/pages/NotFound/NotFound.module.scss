@@ -14,7 +14,7 @@
   gap: 30px;
   justify-content: center;
   align-items: center;
-  @media screen and (max-width: $breakpointMobile) {
+  @media screen and (max-width: $breakpoint-mobile) {
     width: 90%;
   }
 }
@@ -33,10 +33,10 @@
   padding: 0;
   font-weight: 700;
   border-bottom: 2px solid $dark-extra;
-  @media screen and (max-width: $breakpointTablet) {
+  @media screen and (max-width: $breakpoint-tablet) {
     font-size: 24px;
   }
-  @media screen and (max-width: $breakpointMobile) {
+  @media screen and (max-width: $breakpoint-mobile) {
     font-size: 18px;
   }
 }

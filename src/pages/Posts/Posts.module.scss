@@ -1,7 +1,24 @@
-.container {
+@import '../../styles/globalVariables.scss';
+
+.section {
+  @include section;
+  width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
+  align-items: center;
+  background-color: $background-light-grey;
+  gap: 30px;
+}
+.title {
+  font-family: $font-accent;
+  margin: 0;
+  font-size: 32px;
+  color: $dark-extra;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 600px;
 }

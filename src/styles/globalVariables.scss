@@ -1,9 +1,8 @@
+$side-padding: 40px;
+
+//colors
 $primary-dark: #545454;
-$primary-extra: #4c4c4c;
 $dark-extra: #5b483a;
-$accent: #e8b118;
-$grey: #b2b2b2;
-$background-outside: #e5e5e5;
 $max-width: 1200px;
 $white: #fff;
 $black: #000;
@@ -12,7 +11,8 @@ $background-header: radial-gradient(
   #5b483a 0%,
   #262425 100%
 );
-$background-light-grey: #f6f6f6;
+$background-light-grey: #d1d1d1;
+$background-grey: #c3c3c3;
 $font-content: 'Arial', serif;
 $active-link-color: #fafafa;
 $font-accent: 'Georgia', serif;
@@ -20,65 +20,30 @@ $font-extra-color: #cdcdcd;
 $font-button-color: #292929;
 $gold: #f1cdb3;
 $gold-hover: #fddcc4;
-$side-padding: 40px;
-$background-footer: radial-gradient(
-  110.67% 538.64% at 5.73% 50%,
-  #513d2f 0%,
-  #1a1a1c 100%
-);
 
-$breakpoint-extra-big: 1100px;
-$breakpoint-extra-m: 767px;
-$breakpoint-tablet: 900px;
+// breakpoints
+$breakpoint-desktop: 1300px;
+$breakpoint-tablet: 800px;
 $breakpoint-mobile-big: 600px;
 $breakpoint-mobile: 480px;
-@media (max-width: $breakpoint-tablet) {
-  $side-padding: 30px;
-}
-
 
 $transition-duration: 0.5s;
 
-$font-family: 'Arial';
+$decor: 30px;
 
-$decorBig: 75px;
-$decorBigTab: 50px;
-$decorBigMob: 25px;
-$decorSmall: 24px;
-$decorSmallTab: 16px;
-$decorSmallMob: 8px;
-
-$breakpointDesktop: 1300px;
-$breakpointTablet: 800px;
-$breakpointMobile: 675px;
-
-@mixin decorSizeL {
-  width: $decorBig;
-  height: $decorBig;
-  position: relative;
-  @media screen and (max-width: $breakpointDesktop) {
-    width: $decorBigTab;
-    height: $decorBigTab;
-  }
-
-  @media screen and (max-width: $breakpointTablet) {
-    width: $decorBigMob;
-    height: $decorBigMob;
-  }
+@media (max-width: $breakpoint-tablet) {
+  $side-padding: 30px;
+  $decor: calc($decor * 2 / 3);
 }
-@mixin decorSizeS {
-  width: 24px;
-  height: 24px;
-  position: relative;
-  @media screen and (max-width: $breakpointDesktop) {
-    width: $decorSmallTab;
-    height: $decorSmallTab;
-  }
 
-  @media screen and (max-width: $breakpointTablet) {
-    width: $decorSmallMob;
-    height: $decorSmallMob;
-  }
+@media screen and (max-width: $breakpoint-mobile) {
+  $decor: calc($decor / 3);
+}
+
+@mixin decor {
+  width: $decor;
+  height: $decor;
+  position: relative;
 }
 
 @mixin section {
@@ -94,9 +59,9 @@ $breakpointMobile: 675px;
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  @media (max-width: $breakpointTablet) {
-    padding-left: 12px;
-    padding-right: 12px;
+  @media (max-width: $breakpoint-tablet) {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -113,7 +78,7 @@ $breakpointMobile: 675px;
 
 @mixin input($color) {
   @include clickable;
-  font-family: 'Arial';
+  font-family: $font-content;
   width: 100%;
   font-size: 14px;
   font-weight: 600;
@@ -131,14 +96,14 @@ $breakpointMobile: 675px;
   }
   &:focus {
     border-bottom-width: 4px;
-    @media (max-width: $breakpointTablet) {
+    @media (max-width: $breakpoint-tablet) {
       border-bottom-width: 3px;
     }
     &::placeholder {
       opacity: 0;
     }
   }
-  @media (max-width: $breakpointMobile) {
+  @media (max-width: $breakpoint-mobile) {
     font-size: 15px;
     line-height: 18px;
   }
@@ -149,7 +114,7 @@ $breakpointMobile: 675px;
 
 @mixin text($color) {
   margin: 0;
-  font-family: $font-family;
+  font-family: $font-content;
   font-size: 18px;
   font-weight: 700;
   line-height: 27px;
@@ -157,7 +122,7 @@ $breakpointMobile: 675px;
   text-align: left;
   color: $color;
   word-wrap: break-word;
-  @media screen and (max-width: $breakpointDesktop) {
+  @media screen and (max-width: $breakpoint-desktop) {
     font-size: 16px;
     line-height: 23px;
     letter-spacing: -0.035em;
@@ -190,23 +155,29 @@ $breakpointMobile: 675px;
     border: 2px solid $gold;
     background-color: transparent;
     @media (hover: none) {
-    background-color: transparent;
-  }
+      background-color: transparent;
+    }
   }
   @if $type == strong {
     background-color: $gold;
-    border: none
+    border: none;
   }
   @media (hover: none) {
-    background-color: $gold;
+    @if $type == weak {
+      border: 2px solid $gold;
+      background-color: transparent;
+      @media (hover: none) {
+        background-color: transparent;
+      }
+    }
   }
-	&:hover {
-  background-color: $gold-hover;
-}
+  &:hover {
+    background-color: $gold-hover;
+  }
 }
 
 @mixin inactiveBtn {
   border-color: $font-extra-color;
-  color:$font-extra-color;
+  color: $font-extra-color;
   pointer-events: none;
 }

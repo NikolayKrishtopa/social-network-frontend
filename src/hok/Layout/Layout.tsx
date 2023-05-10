@@ -11,16 +11,13 @@ import PopupSystemMessage from '../../components/PopupSystemMessage/PopupSystemM
 import { type LayoutProps } from './Layout.props';
 import cn from 'classnames';
 
-
-
-export default function Layout (props: LayoutProps) {
+export default function Layout(props: LayoutProps) {
   const dispatch = useAppDispatch();
   const isPostsLoading = useAppSelector((state) => state.posts).isLoading;
   const isUsersLoading = useAppSelector((state) => state.users).isLoading;
   const isAuthLoading = useAppSelector((state) => state.auth).isLoading;
 
-  const isLoading =
-    isPostsLoading || isUsersLoading || isAuthLoading;
+  const isLoading = isPostsLoading || isUsersLoading || isAuthLoading;
 
   const [scrollLocked, setScrollLocked] = useState(false);
 
@@ -28,20 +25,16 @@ export default function Layout (props: LayoutProps) {
     dispatch(checkAuth());
   }, []);
 
-
   const { children, withHeader } = props;
 
-  return (    
+  return (
     <div className={cn(s.base, { [s.noScroll]: scrollLocked })}>
       <div className={s.page}>
-        {withHeader && <Header onSideBarOpen={setScrollLocked} />}
+        {withHeader && <Header />}
         <PopupSystemMessage />
         {isLoading && <SpinnerLds />}
-        <>
-          {children}
-        </>
+        <>{children}</>
       </div>
     </div>
-
   );
 }

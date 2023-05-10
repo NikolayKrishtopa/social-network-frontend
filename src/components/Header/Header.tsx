@@ -8,19 +8,18 @@ import { logout } from '../../store/slices/authSlice';
 import burgerIcon from '../../assets/img/burger-icon.svg';
 import cn from 'classnames';
 
-
-export default function Header(props: HeaderPropsType) {
+export default function Header() {
   const { isLogged, currentUser } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const openSideBar: ()=>void = ()=>{
+  const openSideBar: () => void = () => {
     setSidebarOpen(true);
     window.addEventListener('resize', closeSideBar);
     window.addEventListener('scroll', closeSideBar);
   };
 
-  const closeSideBar: ()=>void = ()=>{
+  const closeSideBar: () => void = () => {
     setSidebarOpen(false);
     window.removeEventListener('resize', closeSideBar);
     window.removeEventListener('scroll', closeSideBar);
@@ -38,7 +37,10 @@ export default function Header(props: HeaderPropsType) {
             <h1 className={s.title}>Hard rock network</h1>
             <p className={s.subtitle}>вступай в сообщество</p>
           </NavLink>
-          <nav className={cn(s.nav, {[s.sidebar]: sidebarOpen})} onClick={closeSideBar}>
+          <nav
+            className={cn(s.nav, { [s.sidebar]: sidebarOpen })}
+            onClick={closeSideBar}
+          >
             <ul className={s.menu}>
               {isLogged ? (
                 <>
@@ -117,8 +119,11 @@ export default function Header(props: HeaderPropsType) {
               )}
             </ul>
           </nav>
-          <button className={cn(s.burgerBtn, {[s.burgerBtnOpen]: sidebarOpen})} onClick={sidebarOpen ? closeSideBar : openSideBar}>
-            <img src={burgerIcon} alt="extend sidebarbutton" />
+          <button
+            className={cn(s.burgerBtn, { [s.burgerBtnOpen]: sidebarOpen })}
+            onClick={sidebarOpen ? closeSideBar : openSideBar}
+          >
+            <img src={burgerIcon} alt='extend sidebarbutton' />
           </button>
         </div>
       </div>

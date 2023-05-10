@@ -157,7 +157,7 @@ const usersSlice = createSlice({
       })
       .addCase(addUserToFriends.pending, (state) => {
         state.error = null;
-        state.isLoading = true;
+        // state.isLoading = true;
       })
       .addCase(addUserToFriends.fulfilled, (state, action) => {
         state.error = null;
@@ -170,7 +170,7 @@ const usersSlice = createSlice({
       })
       .addCase(removeUserFromFriends.pending, (state) => {
         state.error = null;
-        state.isLoading = true;
+        // state.isLoading = true;
       })
       .addCase(removeUserFromFriends.fulfilled, (state, action) => {
         state.error = null;

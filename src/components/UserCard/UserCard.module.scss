@@ -7,10 +7,10 @@
   flex-direction: column;
   gap: 27px;
   align-items: center;
-  background-color: #fafafa;
+  background-color: $background-light-grey;
   cursor: pointer;
   transition: 0.5s ease box-shadow;
-  border-radius: 9px;
+  border-radius: 15px;
 }
 .imgContainer {
   width: 100%;
@@ -25,14 +25,15 @@
   text-align: center;
   color: $primary-dark;
 }
-.btnDefault{
-	@include button(weak)
+.btnDefault {
+  @include button(weak);
 }
-.btnFriend{
-	@include button(strong)
+.btnFriend {
+  @include button(strong);
 }
 
-.img{
-	width: 270px;
-	height: 270px;
+.img {
+  width: 270px;
+  height: 270px;
+  border-radius: 15px 15px 0 0;
 }

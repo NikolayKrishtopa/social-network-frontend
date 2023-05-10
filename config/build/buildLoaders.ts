@@ -15,7 +15,11 @@ export default function buildLoaders(mode: BuildMode): webpack.RuleSetRule[] {
       mode === 'production' ? miniCssExtractPlugin.loader : 'style-loader',
       {
         loader: 'css-loader',
-        options: { modules: true },
+        options: { 
+          importLoaders: 1,
+          modules: true, 
+          sourceMap: true 
+        },
       },
       'sass-loader',
     ],

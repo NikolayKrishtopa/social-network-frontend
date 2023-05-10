@@ -8,16 +8,12 @@
   min-height: calc(100vh - 120px);
 }
 .form {
-  min-width: 500px;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
-// .registerForm{
-// 	min-width: 800px;
-// 	display: grid;
-// 	grid-template-columns: repeat(2, 1fr)
-// }
 
 .label {
   @include text($primary-dark);
@@ -41,6 +37,7 @@
   font-size: 12px;
   line-height: 16px;
 }
+
 .button {
   @include button(weak);
 }
