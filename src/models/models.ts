@@ -9,6 +9,7 @@ export interface PostType {
   _id: string;
   likes: Array<string>;
   image: string;
+  ownerName: string
 }
 
 export interface UserType {

@@ -14,13 +14,37 @@ interface IPostsState {
 
 export const getPosts = createAsyncThunk<
   Array<PostType>,
-  void | 'string',
+  string,
   { rejectValue: string }
 >('posts/getPosts', async function (userId, { dispatch, rejectWithValue }) {
   dispatch(startLoading());
   try {
-    const param = typeof userId === 'string' ? userId : '';
-    const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS + param, {
+    const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS + '/' + userId, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    if (!res.ok) {
+      if (res.status === 404) {
+        throw new Error(SYSTEM_MESSAGES.ERROR_404);
+      } else {
+        throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
+      }
+    }
+    const postsList = await res.json();
+    return postsList;
+  } catch (err: any) {
+    return rejectWithValue(err.message);
+  }
+});
+export const getFriendsPosts = createAsyncThunk<
+  Array<PostType>,
+  void | 'string',
+  { rejectValue: string }
+>('posts/getFriendsPosts', async function (userId, { dispatch, rejectWithValue }) {
+  dispatch(startLoading());
+  try {
+    const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -159,12 +183,7 @@ const postsSlice = createSlice({
       .addCase(getPosts.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
-        state.posts = [
-          ...state.posts,
-          ...action.payload.filter(
-            (e) => !state.posts.some((c) => c._id === e._id)
-          ),
-        ];
+        state.posts = action.payload;
       })
       .addCase(getPosts.rejected, (state, { error }) => {
         state.isLoading = false;
@@ -212,6 +231,18 @@ const postsSlice = createSlice({
         ];
       })
       .addCase(unlikePost.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = `${error.name}: ${error.message}`;
+      })
+      .addCase(getFriendsPosts.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getFriendsPosts.fulfilled, (state, action) => {
+        state.error = null;
+        state.isLoading = false;
+        state.posts = action.payload;
+      })
+      .addCase(getFriendsPosts.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = `${error.name}: ${error.message}`;
       });

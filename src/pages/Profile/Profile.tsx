@@ -3,7 +3,7 @@ import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
 import { ProfileProps } from './Profile.props';
 import Header from '../../components/Header/Header';
-import { getPosts } from '../../store/slices/postsSlice';
+import { getPosts, addPost } from '../../store/slices/postsSlice';
 import Post from '../../components/Post/Post';
 import cn from 'classnames';
 import s from './Profile.module.scss';
@@ -14,18 +14,24 @@ export default function Profile(props: ProfileProps) {
   const { posts } = useAppSelector((state) => state.posts);
   const { user } = props;
   const [mode, setMode] = useState<'info' | 'posts'>('info');
+  const [postText, setPostText] = useState('');
 
   const dispatch = useAppDispatch();
 
+  const handleAddPost = (e: any) => {
+    e.preventDefault();
+    dispatch(addPost({ text: postText }));
+  };
+
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts(user._id));
   }, []);
 
   //check if page own or another user
   const isOwn = currentUser._id === user._id;
 
   //check this user is a friend of logged user
-  const isFriend = currentUser.friends.includes(user._id);
+  const isFriend = currentUser?.friends?.includes(user._id);
 
   return (
     <ProtectedRoute protectFrom='unlogged'>
@@ -92,8 +98,10 @@ export default function Profile(props: ProfileProps) {
                       <textarea
                         placeholder='Добавить пост...'
                         className={s.postText}
+                        value={postText}
+                        onChange={(e) => setPostText(e.target.value)}
                       ></textarea>
-                      <button className={s.addPostBtn}>
+                      <button className={s.addPostBtn} onClick={handleAddPost}>
                         <img src={addPostBtn} alt='add post button' />
                       </button>
                     </form>

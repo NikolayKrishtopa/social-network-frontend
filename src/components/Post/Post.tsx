@@ -9,13 +9,12 @@ import { unlikePost } from '../../store/slices/postsSlice';
 import cn from 'classnames';
 
 export default function Post(props: PostProps) {
-  const { image, text, likes, _id: postId } = props.post;
+  const { image, text, likes, _id: postId, ownerName } = props.post;
 
   const dispatch = useAppDispatch();
 
   const { _id: userId } = useAppSelector((state) => state?.auth?.currentUser);
   const isLiked = likes.includes(userId);
-  console.log(likes);
 
   const like = () => {
     dispatch(likePost(postId));
@@ -26,18 +25,21 @@ export default function Post(props: PostProps) {
   };
 
   return (
-    <li className={cn(s.post, { [s.withoutImg]: !image })}>
-      {image && <img src={image} alt='post' className={s.img} />}
-      <p className={s.text}>{text}</p>
-      <div className={s.likesContainer}>
-        <button className={s.likeBtn} onClick={isLiked ? unlike : like}>
-          <img
-            src={isLiked ? likeIconChecked : likeIcon}
-            alt='like'
-            className={s.likeIcon}
-          />
-        </button>
-        <span className={s.likesQty}>{likes.length}</span>
+    <li className={s.post}>
+      <p className={s.ownerName}>{ownerName}</p>
+      <div className={cn(s.postContent, { [s.withoutImg]: !image })}>
+        {image && <img src={image} alt='post' className={s.img} />}
+        <p className={s.text}>{text}</p>
+        <div className={s.likesContainer}>
+          <button className={s.likeBtn} onClick={isLiked ? unlike : like}>
+            <img
+              src={isLiked ? likeIconChecked : likeIcon}
+              alt='like'
+              className={s.likeIcon}
+            />
+          </button>
+          <span className={s.likesQty}>{likes.length}</span>
+        </div>
       </div>
     </li>
   );

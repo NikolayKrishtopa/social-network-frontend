@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { getPosts } from '../../store/slices/postsSlice';
+import { getFriendsPosts } from '../../store/slices/postsSlice';
 import { useEffect } from 'react';
 import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
 import Post from '../../components/Post/Post';
@@ -12,7 +12,7 @@ export default function Posts() {
   const { posts } = useAppSelector((state) => state.posts);
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getFriendsPosts());
   }, []);
 
   return (
