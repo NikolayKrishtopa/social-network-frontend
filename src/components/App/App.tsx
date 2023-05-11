@@ -22,19 +22,15 @@ export default function App() {
   const isPostsLoading = useAppSelector((state) => state.posts).isLoading;
   const isUsersLoading = useAppSelector((state) => state.users).isLoading;
   const isAuthLoading = useAppSelector((state) => state.auth).isLoading;
-  const { currentUser } = useAppSelector((state) => state.auth);
 
   const isLoading = isPostsLoading || isUsersLoading || isAuthLoading;
 
-  const [scrollLocked, setScrollLocked] = useState(false);
 
   useEffect(() => {
-    if (document.cookie.indexOf('jwt') === -1) return;
-
     dispatch(checkAuth());
   }, []);
   return (
-    <div className={cn(s.base, { [s.noScroll]: scrollLocked })}>
+    <div className={cn(s.base)}>
       <div className={s.page}>
         <PopupSystemMessage />
         {isLoading && <SpinnerLds />}

@@ -1,7 +1,5 @@
 const {NODE_ENV} = process.env;
 
-const BASE_URL = NODE_ENV === 'production' 
-  ? 'https://api.mesto.nikolaykrish.nomoredomains.icu/' 
-  : 'http://localhost:3001/';
+const BASE_URL = 'https://api.mesto.nikolaykrish.nomoredomains.icu/';
 
 export default BASE_URL;
