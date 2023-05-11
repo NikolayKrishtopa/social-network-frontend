@@ -8,11 +8,14 @@ import Post from '../../components/Post/Post';
 import cn from 'classnames';
 import s from './Profile.module.scss';
 import addPostBtn from '../../assets/img/Check_fill.svg';
+import { useParams } from 'react-router-dom';
 
-export default function Profile(props: ProfileProps) {
+export default function Profile() {
+  const {userId} = useParams();
   const { currentUser } = useAppSelector((state) => state.auth);
+  const { users } = useAppSelector((state) => state.users);
   const { posts } = useAppSelector((state) => state.posts);
-  const { user } = props;
+  const user = users.find(u => u._id === userId) || currentUser;
   const [mode, setMode] = useState<'info' | 'posts'>('info');
   const [postText, setPostText] = useState('');
 
@@ -107,9 +110,9 @@ export default function Profile(props: ProfileProps) {
                     </form>
                   )}
                   <div className={cn(s.posts, { [s.reducedHeight]: isOwn })}>
-                    {posts.map((p) => (
+                    {posts.length > 0 ? posts.map((p) => (
                       <Post key={p._id} post={p} />
-                    ))}
+                    )) : <p className={s.text}>У пользователя пока нет постов...</p>}
                   </div>
                 </>
               )}

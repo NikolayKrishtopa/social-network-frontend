@@ -15,12 +15,13 @@ interface IUsersState {
 
 export const getUsers = createAsyncThunk<
 Array<UserTypeExt>,
-void,
+void | string,
 { rejectValue: string }
->('about/getUsers', async function (_, { dispatch, rejectWithValue }) {
+>('about/getUsers', async function (search, { dispatch, rejectWithValue }) {
   try {
+    const param = search==='' ? '' : typeof search === 'string' ? `/search/${search}` : '';
     const res = await fetch(
-      BASE_URL + URL_ENDPOINTS.USERS,
+      BASE_URL + URL_ENDPOINTS.USERS + param,
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },

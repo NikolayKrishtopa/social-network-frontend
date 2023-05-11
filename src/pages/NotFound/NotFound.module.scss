@@ -2,6 +2,7 @@
 
 .page {
   @include section($background-header);
+  background: $background-header;
   align-items: center;
 }
 .container {

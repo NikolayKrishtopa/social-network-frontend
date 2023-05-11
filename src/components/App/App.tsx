@@ -44,7 +44,8 @@ export default function App() {
           <Route path='/posts' element={<Posts />} />
           <Route path='/login' element={<Auth mode='login' />} />
           <Route path='/register' element={<Auth mode='register' />} />
-          <Route path='/profile' element={<Profile user={currentUser} />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/:userId' element={<Profile />} />
           <Route path='/*' element={<NotFound />} />
         </Routes>
       </div>

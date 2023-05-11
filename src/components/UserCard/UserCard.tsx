@@ -3,7 +3,7 @@ import s from './UserCard.module.scss';
 import { UserCardsProps } from './UserCard.props';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
 import { addUserToFriends, removeUserFromFriends } from '../../store/slices/usersSlice';
-import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
 export default function UserCard(props: UserCardsProps){
   const {name, avatar, _id} = props.user;
@@ -22,9 +22,11 @@ export default function UserCard(props: UserCardsProps){
 
   return(
     <li className={s.card}>
-      <div className={s.imgContainer}>
-        <img src={avatar} alt={name} className={s.img} />
-      </div>
+      <Link to={`/${_id}`}>
+        <div className={s.imgContainer}>
+          <img src={avatar} alt={name} className={s.img} />
+        </div>
+      </Link>
       <h3 className={s.title}>{name}</h3>
       <button 
         className={isFriend ? s.btnFriend : s.btnDefault}
