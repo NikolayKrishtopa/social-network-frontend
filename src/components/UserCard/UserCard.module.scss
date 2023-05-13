@@ -28,9 +28,11 @@
 }
 .btnDefault {
   @include button(weak);
+  width: 90%;
 }
 .btnFriend {
   @include button(strong);
+  width: 90%;
 }
 
 .img {
