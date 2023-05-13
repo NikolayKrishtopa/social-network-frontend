@@ -7,10 +7,13 @@ import { UserType } from '../../models/models';
 import cn from 'classnames';
 import { regUser, editUser } from '../../store/slices/authSlice';
 import { RegisterProps } from './Register.props';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register(props: RegisterProps) {
   const { mode, current, onCancel } = props;
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -20,8 +23,11 @@ export default function Register(props: RegisterProps) {
   } = useForm<UserType>({ mode: 'onChange' });
 
   const onSubmitRegister: SubmitHandler<UserType> = async (data) => {
-    await dispatch(regUser(data));
-    reset();
+    const res = await dispatch(regUser(data));
+    if (res) {
+      navigate('/login');
+      reset();
+    }
   };
 
   const onSubmitEdit: SubmitHandler<UserType> = async (data) => {

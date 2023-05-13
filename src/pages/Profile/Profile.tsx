@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
 import { ProfileProps } from './Profile.props';
 import Header from '../../components/Header/Header';
 import { getPosts, addPost } from '../../store/slices/postsSlice';
+import { addUserToFriends, removeUserFromFriends } from '../../store/slices/usersSlice';
 import Post from '../../components/Post/Post';
 import cn from 'classnames';
 import s from './Profile.module.scss';
@@ -20,6 +21,16 @@ export default function Profile() {
   const [mode, setMode] = useState<'info' | 'posts'>('info');
   const [postText, setPostText] = useState('');
   const [editMode, setEditMode] = useState(false);
+
+  //add user to friends
+  const connect = () => {
+    dispatch(addUserToFriends(user._id));
+  };
+
+  //remove user from friends
+  const disconnect = () => {
+    dispatch(removeUserFromFriends(user._id));
+  };
 
   const dispatch = useAppDispatch();
 
@@ -59,7 +70,7 @@ export default function Profile() {
                   <h2 className={s.name}>{user.name}</h2>
                   <p className={s.status}>{user.status || 'Укажите статус'}</p>
                   {!isOwn && (
-                    <button className={s.Addbtn}>
+                    <button className={s.btn} onClick={isFriend ? disconnect : connect}>
                       {isFriend ? 'Удалить' : 'Добавить'}
                     </button>
                   )}
@@ -104,9 +115,11 @@ export default function Profile() {
                         <p className={s.text}>{user.college}</p>
                       </div>
                     </div>
-                    <button className={s.btn} onClick={() => setEditMode(true)}>
+                    {isOwn && (
+                      <button className={s.btn} onClick={() => setEditMode(true)}>
                       Редактировать профиль
-                    </button>
+                      </button>
+                    )}
                   </>
                 ) : (
                   <>
