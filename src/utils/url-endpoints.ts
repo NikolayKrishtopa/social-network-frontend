@@ -8,8 +8,7 @@ const URL_ENDPOINTS = {
   FRIENDS_POSTS: 'posts/friends',
   LOGIN: 'signin',
   LOGOUT: 'signout',
-  REGISTER: 'signup'
-
+  REGISTER: 'signup',
 };
 
 export default URL_ENDPOINTS;

@@ -64,6 +64,25 @@ export const regUser = createAsyncThunk<UserTypeExt, UserType>(
     }
   }
 );
+export const editUser = createAsyncThunk<UserTypeExt, UserType>(
+  'auth/editUser',
+  async (payload, { dispatch, rejectWithValue }) => {
+    const response = await fetch(BASE_URL + URL_ENDPOINTS.USERS_ME, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      credentials: 'include',
+    });
+    if (response.ok) {
+      const user = await response.json();
+      return user;
+    } else {
+      throw new Error(SYSTEM_MESSAGES.LOGIN_FAIL);
+    }
+  }
+);
 
 export const checkAuth = createAsyncThunk<
   UserTypeExt,
@@ -198,6 +217,35 @@ const authSlice = createSlice({
           friends: [],
         };
         state.isLogged = false;
+      })
+      .addCase(regUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(regUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.systMsgAuth = SYSTEM_MESSAGES.REGISTER_SCSS;
+        state.error = null;
+      })
+      .addCase(regUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = `${action.error.name}: ${action.error.message}`;
+        state.systMsgAuth = SYSTEM_MESSAGES.REGISTER_FAIL;
+      })
+      .addCase(editUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.systMsgAuth = SYSTEM_MESSAGES.PROFILE_UPDATE_SCSS;
+        state.error = null;
+        state.currentUser = action.payload;
+      })
+      .addCase(editUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = `${action.error.name}: ${action.error.message}`;
+        state.systMsgAuth = SYSTEM_MESSAGES.PROFILE_UPDATE_FAIL;
       });
   },
 });

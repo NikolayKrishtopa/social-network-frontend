@@ -11,7 +11,7 @@ export default function Auth(props: AuthPropsType) {
     <ProtectedRoute protectFrom='logged'>
       <>
         <Header />
-        {mode === 'login' ? <Login /> : <Register />}
+        {mode === 'login' ? <Login /> : <Register mode='register'/>}
       </>
     </ProtectedRoute>
   );

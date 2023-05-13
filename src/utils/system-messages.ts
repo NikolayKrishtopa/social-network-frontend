@@ -23,5 +23,9 @@ const SYSTEM_MESSAGES = {
   GET_USERS_FAIL: 'Ошибка при получения списка пользователей с сервера',
   CONNECT_SCSS: 'Пользователь добавлен в друзья',
   DISCONNECT_SCSS: 'Пользователь удалён из друзей',
+  REGISTER_SCSS: 'Новый аккаунт успешно зарегистрирован',
+  REGISTER_FAIL: 'При регистрации пользователя произошла ошибка, повторите попытку',
+  PROFILE_UPDATE_SCSS: 'Профиль успешно обновлен',
+  PROFILE_UPDATE_FAIL: 'Ошибка при обновлении данных пользователя',
 };
 export default SYSTEM_MESSAGES;

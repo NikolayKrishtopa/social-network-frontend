@@ -5,9 +5,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { UserType } from '../../models/models';
 import cn from 'classnames';
-import { regUser } from '../../store/slices/authSlice';
+import { regUser, editUser } from '../../store/slices/authSlice';
+import { RegisterProps } from './Register.props';
 
-export default function Register() {
+export default function Register(props: RegisterProps) {
+  const { mode, current, onCancel } = props;
   const dispatch = useAppDispatch();
 
   const {
@@ -22,15 +24,26 @@ export default function Register() {
     reset();
   };
 
+  const onSubmitEdit: SubmitHandler<UserType> = async (data) => {
+    await dispatch(editUser(data));
+    onCancel && onCancel();
+    reset();
+  };
+
   return (
     <section className={s.section}>
       <form
         className={s.form + ' ' + s.registerForm}
-        onSubmit={handleSubmit(onSubmitRegister)}
+        onSubmit={
+          mode === 'register'
+            ? handleSubmit(onSubmitRegister)
+            : handleSubmit(onSubmitEdit)
+        }
       >
         <label className={s.label}>
           <input
             type='text'
+            defaultValue={current?.name || ''}
             placeholder='Имя'
             className={s.input}
             {...register('name', {
@@ -52,6 +65,7 @@ export default function Register() {
             type='text'
             placeholder='Город'
             className={s.input}
+            defaultValue={current?.city || ''}
             {...register('city', {
               required: 'Обязательное поле',
               minLength: {
@@ -71,6 +85,7 @@ export default function Register() {
             type='text'
             placeholder='Учебное заведение'
             className={s.input}
+            defaultValue={current?.college || ''}
             {...register('college', {
               required: 'Обязательное поле',
               minLength: {
@@ -90,6 +105,7 @@ export default function Register() {
             type='text'
             placeholder='Ваш пол'
             className={s.input}
+            defaultValue={current?.gender || ''}
             {...register('gender', {
               required: 'Обязательное поле',
               minLength: {
@@ -107,10 +123,10 @@ export default function Register() {
         <label className={s.label}>
           <input
             type='text'
-            placeholder='Ссылка на аватар'
+            placeholder='Ссылка на аватар (не обязательно)'
             className={s.input}
+            defaultValue={current?.avatar || ''}
             {...register('avatar', {
-              required: 'Обязательное поле',
               pattern: /[^a-z0-9_\-.]/,
             })}
           />
@@ -123,6 +139,7 @@ export default function Register() {
           <input
             type='text'
             placeholder='Адрес электронной почты'
+            defaultValue={current?.email || ''}
             className={s.input}
             {...register('email', {
               required: 'Обязательное поле',
@@ -153,8 +170,13 @@ export default function Register() {
           </p>
         </label>
         <button className={cn(s.button, { [s.inactiveBtn]: !isValid })}>
-          Зарегистрироваться
+          {mode === 'register' ? 'Зарегистрироваться' : 'Сохранить изменения'}
         </button>
+        {mode === 'edit' && (
+          <button className={s.button} onClick={onCancel}>
+            {'Отмена'}
+          </button>
+        )}
       </form>
     </section>
   );
