@@ -7,24 +7,24 @@
   padding-top: 50px;
   padding-bottom: 50px;
   display: grid;
-  grid-template-columns: repeat(4, 270px);
+  grid-template-columns: repeat(4, 1fr);
   justify-content: center;
   align-items: start;
   gap: 20px;
   gap: auto;
-  @media screen and (max-width: 1300px) {
+  @media screen and (max-width: 1100px) {
     grid-template-columns: repeat(3, 1fr);
   }
-  @media screen and (max-width: 930px) {
+  @media screen and (max-width: $breakpoint-tablet) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media screen and (max-width:$breakpoint-mobile-big) {
+  @media screen and (max-width: $breakpoint-mobile-big) {
     grid-template-columns: 1fr;
   }
 }
-.btns{
+.btns {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 .section {
   @include section($background-grey);
@@ -33,7 +33,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  @media screen and (max-width:$breakpoint-mobile-big) {
+  @media screen and (max-width: $breakpoint-mobile-big) {
     grid-template-columns: 1fr;
     gap: 10px;
   }
@@ -44,8 +44,8 @@
   background: $background-light-grey;
   padding: 5px;
 }
-.active{
-  background: $gold; 
+.active {
+  background: $gold;
 }
 .input {
   @include text($dark-extra);

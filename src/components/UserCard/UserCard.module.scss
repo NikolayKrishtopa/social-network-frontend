@@ -1,13 +1,15 @@
 @import '../../styles/globalVariables.scss';
 
 .card {
-  width: 270px;
-  height: 435px;
+  width: 100%;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
+  flex-shrink: 1;
   gap: 27px;
   align-items: center;
   background-color: $background-light-grey;
+  padding-bottom: 15px;
   cursor: pointer;
   transition: 0.5s ease box-shadow;
   border-radius: 15px;
@@ -15,11 +17,13 @@
 }
 .imgContainer {
   width: 100%;
+  display: flex;
+  flex-shrink: 1;
 }
 
 .title {
   margin: 0;
-  font-family: 'Arial';
+  font-family: $font-content;
   font-size: 20px;
   line-height: 23px;
   letter-spacing: 0.06em;
@@ -36,10 +40,14 @@
 }
 
 .img {
-  width: 270px;
-  height: 270px;
+  width: 100%;
+  aspect-ratio: 1;
   object-fit: cover;
   object-position: center;
-
+  object-fit: cover;
+  object-position: center;
   border-radius: 15px 15px 0 0;
+}
+.link {
+  width: 100%;
 }
