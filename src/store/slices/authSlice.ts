@@ -60,7 +60,7 @@ export const regUser = createAsyncThunk<UserTypeExt, UserType>(
       const user = await response.json();
       return user;
     } else {
-      throw new Error(SYSTEM_MESSAGES.LOGIN_FAIL);
+      throw new Error(SYSTEM_MESSAGES.REGISTER_FAIL);
     }
   }
 );
@@ -174,7 +174,6 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = `${action.error.name}: ${action.error.message}`;
         state.systMsgAuth = SYSTEM_MESSAGES.COOKIES_EXPIRED;
       })
       .addCase(logout.pending, (state) => {

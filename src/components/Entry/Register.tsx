@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Entry.module.scss';
 import validatePassword from '../../utils/validatePassword';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { UserType } from '../../models/models';
 import cn from 'classnames';
 import { regUser, editUser } from '../../store/slices/authSlice';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Register(props: RegisterProps) {
   const { mode, current, onCancel } = props;
   const dispatch = useAppDispatch();
+  const error = useAppSelector((state) => state.auth.error);
 
   const navigate = useNavigate();
 
@@ -23,8 +24,9 @@ export default function Register(props: RegisterProps) {
   } = useForm<UserType>({ mode: 'onChange' });
 
   const onSubmitRegister: SubmitHandler<UserType> = async (data) => {
-    const res = await dispatch(regUser(data));
-    if (res) {
+    await dispatch(regUser(data));
+    console.log(error);
+    if (!error) {
       navigate('/login');
       reset();
     }
@@ -32,8 +34,12 @@ export default function Register(props: RegisterProps) {
 
   const onSubmitEdit: SubmitHandler<UserType> = async (data) => {
     await dispatch(editUser(data));
-    onCancel && onCancel();
-    reset();
+    console.log(error);
+    if (!error) {
+      
+      onCancel && onCancel();
+      reset();
+    }
   };
 
   return (
@@ -129,10 +135,11 @@ export default function Register(props: RegisterProps) {
         <label className={s.label}>
           <input
             type='text'
-            placeholder='Ссылка на аватар (не обязательно)'
+            placeholder='Ссылка на аватар'
             className={s.input}
             defaultValue={current?.avatar || ''}
             {...register('avatar', {
+              required: 'Обязательное поле',
               pattern: /[^a-z0-9_\-.]/,
             })}
           />
