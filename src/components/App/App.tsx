@@ -8,7 +8,7 @@ import Main from '../../pages/Main/Main';
 import NotFound from '../../pages/NotFound/NotFound';
 import '../../index.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { checkAuth } from '../../store/slices/authSlice';
 import s from './App.module.scss';
 import SpinnerLds from '../../components/UI/SpinnerLds/SpinnerLds';
@@ -24,7 +24,6 @@ export default function App() {
   const isAuthLoading = useAppSelector((state) => state.auth).isLoading;
 
   const isLoading = isPostsLoading || isUsersLoading || isAuthLoading;
-
 
   useEffect(() => {
     dispatch(checkAuth());

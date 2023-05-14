@@ -2,7 +2,6 @@ import React from 'react';
 import s from './Main.module.scss';
 import { Link } from 'react-router-dom';
 import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
-import Header from '../../components/Header/Header';
 
 export default function Main() {
   return (

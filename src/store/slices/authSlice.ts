@@ -15,8 +15,8 @@ interface IAuthState {
 export const logout = createAsyncThunk<
   { withMsg: boolean },
   { withMsg: boolean }
->('auth/logout', async ({ withMsg }, { dispatch, rejectWithValue }) => {
-  const res = await fetch(BASE_URL + URL_ENDPOINTS.LOGOUT, {
+>('auth/logout', async ({ withMsg }) => {
+  await fetch(BASE_URL + URL_ENDPOINTS.LOGOUT, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const logout = createAsyncThunk<
 });
 export const login = createAsyncThunk<UserTypeExt, UserLoginType>(
   'auth/login',
-  async (payload, { dispatch, rejectWithValue }) => {
+  async (payload) => {
     const response = await fetch(BASE_URL + URL_ENDPOINTS.LOGIN, {
       method: 'POST',
       headers: {
@@ -48,7 +48,7 @@ export const login = createAsyncThunk<UserTypeExt, UserLoginType>(
 
 export const regUser = createAsyncThunk<UserTypeExt, UserType>(
   'auth/regUser',
-  async (payload, { dispatch, rejectWithValue }) => {
+  async (payload) => {
     const response = await fetch(BASE_URL + URL_ENDPOINTS.REGISTER, {
       method: 'POST',
       headers: {
@@ -66,7 +66,7 @@ export const regUser = createAsyncThunk<UserTypeExt, UserType>(
 );
 export const editUser = createAsyncThunk<UserTypeExt, UserType>(
   'auth/editUser',
-  async (payload, { dispatch, rejectWithValue }) => {
+  async (payload) => {
     const response = await fetch(BASE_URL + URL_ENDPOINTS.USERS_ME, {
       method: 'PATCH',
       headers: {

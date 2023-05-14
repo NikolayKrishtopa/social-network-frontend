@@ -16,137 +16,105 @@ export const getPosts = createAsyncThunk<
   Array<PostType>,
   string,
   { rejectValue: string }
->('posts/getPosts', async function (userId, { dispatch, rejectWithValue }) {
-  dispatch(startLoading());
-  try {
-    const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS + '/' + userId, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    });
-    if (!res.ok) {
-      if (res.status === 404) {
-        throw new Error(SYSTEM_MESSAGES.ERROR_404);
-      } else {
-        throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
-      }
+>('posts/getPosts', async function (userId) {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS + '/' + userId, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new Error(SYSTEM_MESSAGES.ERROR_404);
+    } else {
+      throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
     }
-    const postsList = await res.json();
-    return postsList;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
   }
+  const postsList = await res.json();
+  return postsList;
 });
 export const getFriendsPosts = createAsyncThunk<
   Array<PostType>,
   void | 'string',
   { rejectValue: string }
->(
-  'posts/getFriendsPosts',
-  async function (userId, { dispatch, rejectWithValue }) {
-    dispatch(startLoading());
-    try {
-      const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
-      if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error(SYSTEM_MESSAGES.ERROR_404);
-        } else {
-          throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
-        }
-      }
-      const postsList = await res.json();
-      return postsList;
-    } catch (err: any) {
-      return rejectWithValue(err.message);
+>('posts/getFriendsPosts', async function () {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new Error(SYSTEM_MESSAGES.ERROR_404);
+    } else {
+      throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
     }
   }
-);
+  const postsList = await res.json();
+  return postsList;
+});
 
 export const addPost = createAsyncThunk<
   PostType,
   { text: string; image: string },
   { rejectValue: string }
->('posts/addPost', async function (post, { dispatch, rejectWithValue }) {
-  dispatch(startLoading());
-  try {
-    const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(post),
-    });
-    if (!res.ok) {
-      if (res.status === 404) {
-        throw new Error(SYSTEM_MESSAGES.ERROR_404);
-      } else {
-        throw new Error(SYSTEM_MESSAGES.ADD_POSTS_FAIL);
-      }
+>('posts/addPost', async function (post) {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(post),
+  });
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new Error(SYSTEM_MESSAGES.ERROR_404);
+    } else {
+      throw new Error(SYSTEM_MESSAGES.ADD_POSTS_FAIL);
     }
-    const posts = await res.json();
-    return posts;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
   }
+  const posts = await res.json();
+  return posts;
 });
 
 export const likePost = createAsyncThunk<
   PostType,
   string,
   { rejectValue: string }
->('posts/likePost', async function (id, { dispatch, rejectWithValue }) {
-  try {
-    const res = await fetch(
-      BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
-      {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      }
-    );
-    if (!res.ok) {
-      if (res.status === 404) {
-        throw new Error(SYSTEM_MESSAGES.ERROR_404);
-      } else {
-        throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
-      }
+>('posts/likePost', async function (id) {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new Error(SYSTEM_MESSAGES.ERROR_404);
+    } else {
+      throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
     }
-    const posts = await res.json();
-    return posts;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
   }
+  const posts = await res.json();
+  return posts;
 });
 
 export const unlikePost = createAsyncThunk<
   PostType,
   string,
   { rejectValue: string }
->('posts/unlikePost', async function (id, { dispatch, rejectWithValue }) {
-  try {
-    const res = await fetch(
-      BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like',
-      {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      }
-    );
-    if (!res.ok) {
-      if (res.status === 404) {
-        throw new Error(SYSTEM_MESSAGES.ERROR_404);
-      } else {
-        throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
-      }
+>('posts/unlikePost', async function (id) {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS + '/' + id + '/like', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new Error(SYSTEM_MESSAGES.ERROR_404);
+    } else {
+      throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
     }
-    const posts = await res.json();
-    return posts;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
   }
+  const posts = await res.json();
+  return posts;
 });
 
 const postsSlice = createSlice({
@@ -239,6 +207,7 @@ const postsSlice = createSlice({
       })
       .addCase(getFriendsPosts.pending, (state) => {
         state.error = null;
+        state.isLoading = true;
       })
       .addCase(getFriendsPosts.fulfilled, (state, action) => {
         state.error = null;

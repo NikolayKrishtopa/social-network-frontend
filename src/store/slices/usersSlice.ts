@@ -6,113 +6,84 @@ import BASE_URL from '../../utils/base-url';
 import { setCurrentUser } from './authSlice';
 
 interface IUsersState {
-  users: Array<UserTypeExt>
-  currentUser: UserTypeExt | null
-  error: string | null
-  isLoading: boolean
-  systMsgUsers: string
+  users: Array<UserTypeExt>;
+  currentUser: UserTypeExt | null;
+  error: string | null;
+  isLoading: boolean;
+  systMsgUsers: string;
 }
 
 export const getUsers = createAsyncThunk<
-Array<UserTypeExt>,
-void | string,
-{ rejectValue: string }
->('about/getUsers', async function (search, { dispatch, rejectWithValue }) {
-  try {
-    const param = search==='' ? '' : typeof search === 'string' ? `/search/${search}` : '';
-    const res = await fetch(
-      BASE_URL + URL_ENDPOINTS.USERS + param,
-      {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-      }
-    );
-    if (!res.ok) {
-      throw new Error(SYSTEM_MESSAGES.GET_USERS_FAIL);
-    }
-    const users = await res.json();
-    return users;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
+  Array<UserTypeExt>,
+  void | string,
+  { rejectValue: string }
+>('about/getUsers', async function (search) {
+  const param =
+    search === '' ? '' : typeof search === 'string' ? `/search/${search}` : '';
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.USERS + param, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error(SYSTEM_MESSAGES.GET_USERS_FAIL);
   }
+  const users = await res.json();
+  return users;
 });
 
 export const getFriends = createAsyncThunk<
-Array<UserTypeExt>,
-void,
-{ rejectValue: string }
->('about/getFriends', async function (_, { dispatch, rejectWithValue }) {
-  try {
-    const res = await fetch(
-      BASE_URL + URL_ENDPOINTS.FRIENDS,
-      {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-      }
-    );
-    if (!res.ok) {
-      throw new Error(SYSTEM_MESSAGES.GET_USERS_FAIL);
-    }
-    const users = await res.json();
-    return users;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
+  Array<UserTypeExt>,
+  void,
+  { rejectValue: string }
+>('about/getFriends', async function () {
+  const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error(SYSTEM_MESSAGES.GET_USERS_FAIL);
   }
+  const users = await res.json();
+  return users;
 });
 
 export const addUserToFriends = createAsyncThunk<
-UserTypeExt,
-string,
-{ rejectValue: string }
->('about/addUserToFriends', async function (id, { dispatch, rejectWithValue }) {
-  try {
-    const res = await fetch(
-      `${BASE_URL}${URL_ENDPOINTS.USERS}/${id}/connect`,
-      {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-      }
-    );
-    if (!res.ok) {
-      throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
-    }
-    const user = await res.json();
-    dispatch(setCurrentUser(user));
-    return user;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
+  UserTypeExt,
+  string,
+  { rejectValue: string }
+>('about/addUserToFriends', async function (id, { dispatch }) {
+  const res = await fetch(`${BASE_URL}${URL_ENDPOINTS.USERS}/${id}/connect`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
   }
+  const user = await res.json();
+  dispatch(setCurrentUser(user));
+  return user;
 });
 
 export const removeUserFromFriends = createAsyncThunk<
-UserTypeExt,
-string,
-{ rejectValue: string }
->('about/removeUserFromFriends', async function (id, { dispatch, rejectWithValue }) {
-  try {
-    const res = await fetch(
-      `${BASE_URL}${URL_ENDPOINTS.USERS}/${id}/connect`,
-      {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-      }
-    );
-    if (!res.ok) {
-      throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
-    }
-    const user = await res.json();
-    dispatch(setCurrentUser(user));
-    return user;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
+  UserTypeExt,
+  string,
+  { rejectValue: string }
+>('about/removeUserFromFriends', async function (id, { dispatch }) {
+  const res = await fetch(`${BASE_URL}${URL_ENDPOINTS.USERS}/${id}/connect`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error(SYSTEM_MESSAGES.DEFAULT_ERR);
   }
+  const user = await res.json();
+  dispatch(setCurrentUser(user));
+  return user;
 });
-
-
 
 const usersSlice = createSlice({
   name: 'usersSlice',
@@ -126,7 +97,7 @@ const usersSlice = createSlice({
   reducers: {
     clearSystMsgUsers: (state) => {
       state.systMsgUsers = '';
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -160,7 +131,7 @@ const usersSlice = createSlice({
         state.error = null;
         // state.isLoading = true;
       })
-      .addCase(addUserToFriends.fulfilled, (state, action) => {
+      .addCase(addUserToFriends.fulfilled, (state) => {
         state.error = null;
         state.isLoading = false;
         state.systMsgUsers = SYSTEM_MESSAGES.CONNECT_SCSS;
@@ -173,7 +144,7 @@ const usersSlice = createSlice({
         state.error = null;
         // state.isLoading = true;
       })
-      .addCase(removeUserFromFriends.fulfilled, (state, action) => {
+      .addCase(removeUserFromFriends.fulfilled, (state) => {
         state.error = null;
         state.isLoading = false;
         state.systMsgUsers = SYSTEM_MESSAGES.DISCONNECT_SCSS;
@@ -182,8 +153,7 @@ const usersSlice = createSlice({
         state.isLoading = false;
         state.error = `${error.name}: ${error.message}`;
       });
-      
-  }
+  },
 });
-export const {  clearSystMsgUsers } = usersSlice.actions;
+export const { clearSystMsgUsers } = usersSlice.actions;
 export default usersSlice.reducer;

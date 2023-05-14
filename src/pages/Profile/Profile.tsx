@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProtectedRoute from '../../hok/protectedRoute/ProtectedRoute';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
-import { ProfileProps } from './Profile.props';
 import Header from '../../components/Header/Header';
 import { getPosts, addPost } from '../../store/slices/postsSlice';
 import {
@@ -15,6 +14,7 @@ import addPostBtn from '../../assets/img/Check_fill.svg';
 import { useParams } from 'react-router-dom';
 import Register from '../../components/Entry/Register';
 
+// TODO: split this page
 export default function Profile() {
   const { userId } = useParams();
   const { currentUser } = useAppSelector((state) => state.auth);

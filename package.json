@@ -6,8 +6,8 @@
   "scripts": {
     "buildDev": "webpack --env mode=development",
     "buildProd": "webpack --env mode=production",
-    "lint": "eslint .",
-    "lintFix": "eslint . --fix",
+    "lint": "eslint ./src",
+    "lintFix": "eslint ./src --fix",
     "dev": "webpack serve --env port=8080",
     "predeploy": "npm run buildProd",
     "deploy": "gh-pages -d dist"

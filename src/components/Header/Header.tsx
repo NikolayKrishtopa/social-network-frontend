@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { HeaderPropsType } from './Header.props';
 import s from './Header.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
