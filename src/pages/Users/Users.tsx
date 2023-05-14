@@ -31,10 +31,25 @@ export default function Users() {
         <section className={s.section}>
           <div className={s.nav}>
             <div className={s.btns}>
-              <button className={cn(s.btn, {[s.active]: mode==='all'})} onClick={()=>setMode('all')}>Все пользователи</button>
-              <button className={cn(s.btn, {[s.active]: mode==='friends'})} onClick={()=>setMode('friends')}>Друзья</button>
+              <button
+                className={cn(s.btn, { [s.active]: mode === 'all' })}
+                onClick={() => setMode('all')}
+              >
+                Все пользователи
+              </button>
+              <button
+                className={cn(s.btn, { [s.active]: mode === 'friends' })}
+                onClick={() => setMode('friends')}
+              >
+                Друзья
+              </button>
             </div>
-            <input type="text" placeholder='Поиск...' className={s.input} onChange={debounce}/>
+            <input
+              type='text'
+              placeholder='Поиск...'
+              className={s.input}
+              onChange={debounce}
+            />
           </div>
           <ul className={s.container}>
             {users.map((u) => (
