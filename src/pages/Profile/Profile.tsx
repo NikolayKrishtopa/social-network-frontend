@@ -4,7 +4,10 @@ import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
 import { ProfileProps } from './Profile.props';
 import Header from '../../components/Header/Header';
 import { getPosts, addPost } from '../../store/slices/postsSlice';
-import { addUserToFriends, removeUserFromFriends } from '../../store/slices/usersSlice';
+import {
+  addUserToFriends,
+  removeUserFromFriends,
+} from '../../store/slices/usersSlice';
 import Post from '../../components/Post/Post';
 import cn from 'classnames';
 import s from './Profile.module.scss';
@@ -20,6 +23,7 @@ export default function Profile() {
   const user = users.find((u) => u._id === userId) || currentUser;
   const [mode, setMode] = useState<'info' | 'posts'>('info');
   const [postText, setPostText] = useState('');
+  const [postImg, setPostImg] = useState('');
   const [editMode, setEditMode] = useState(false);
 
   //add user to friends
@@ -36,7 +40,7 @@ export default function Profile() {
 
   const handleAddPost = (e: any) => {
     e.preventDefault();
-    dispatch(addPost({ text: postText }));
+    dispatch(addPost({ text: postText, image: postImg }));
   };
 
   useEffect(() => {
@@ -70,7 +74,10 @@ export default function Profile() {
                   <h2 className={s.name}>{user.name}</h2>
                   <p className={s.status}>{user.status || 'Укажите статус'}</p>
                   {!isOwn && (
-                    <button className={s.btn} onClick={isFriend ? disconnect : connect}>
+                    <button
+                      className={s.btn}
+                      onClick={isFriend ? disconnect : connect}
+                    >
                       {isFriend ? 'Удалить' : 'Добавить'}
                     </button>
                   )}
@@ -116,8 +123,11 @@ export default function Profile() {
                       </div>
                     </div>
                     {isOwn && (
-                      <button className={s.btn} onClick={() => setEditMode(true)}>
-                      Редактировать профиль
+                      <button
+                        className={s.btn}
+                        onClick={() => setEditMode(true)}
+                      >
+                        Редактировать профиль
                       </button>
                     )}
                   </>
@@ -131,12 +141,21 @@ export default function Profile() {
                           value={postText}
                           onChange={(e) => setPostText(e.target.value)}
                         ></textarea>
-                        <button
-                          className={s.addPostBtn}
-                          onClick={handleAddPost}
-                        >
-                          <img src={addPostBtn} alt='add post button' />
-                        </button>
+                        <div className={s.bottomPanel}>
+                          <input
+                            className={s.imgLink}
+                            type='text'
+                            placeholder='ссылка на изображение...'
+                            value={postImg}
+                            onChange={(e) => setPostImg(e.target.value)}
+                          />
+                          <button
+                            className={s.addPostBtn}
+                            onClick={handleAddPost}
+                          >
+                            <img src={addPostBtn} alt='add post button' />
+                          </button>
+                        </div>
                       </form>
                     )}
                     <div className={cn(s.posts, { [s.reducedHeight]: isOwn })}>

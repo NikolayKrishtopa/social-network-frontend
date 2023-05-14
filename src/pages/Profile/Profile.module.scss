@@ -118,16 +118,18 @@
   position: relative;
   max-width: 600px;
   align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .postText {
   @include text($dark-extra);
   width: 100%;
   box-sizing: border-box;
-  padding: 0;
   border: 2px solid $dark-extra;
   border-radius: 10px;
   padding: 10px;
-  padding-right: 15px;
+  min-height: 100px;
   &::-webkit-scrollbar {
     width: 2px;
   }
@@ -138,9 +140,7 @@
 }
 .addPostBtn {
   @include clickable;
-  position: absolute;
-  bottom: 10px;
-  right: 5px;
+  padding: 0;
   width: 32px;
   height: 32px;
   display: flex;
@@ -149,4 +149,22 @@
   background-color: transparent;
   border: none;
   transform: scale(1.5);
+}
+.bottomPanel {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.imgLink {
+  @include text($dark-extra);
+  font-size: 12px;
+  line-height: 1;
+  padding: 0 5px;
+  border-radius: 5px;
+  width: 100%;
+  &:focus {
+    border: none;
+    outline: 2px solid $gold;
+  }
 }

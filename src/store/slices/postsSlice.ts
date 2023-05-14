@@ -41,31 +41,34 @@ export const getFriendsPosts = createAsyncThunk<
   Array<PostType>,
   void | 'string',
   { rejectValue: string }
->('posts/getFriendsPosts', async function (userId, { dispatch, rejectWithValue }) {
-  dispatch(startLoading());
-  try {
-    const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    });
-    if (!res.ok) {
-      if (res.status === 404) {
-        throw new Error(SYSTEM_MESSAGES.ERROR_404);
-      } else {
-        throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
+>(
+  'posts/getFriendsPosts',
+  async function (userId, { dispatch, rejectWithValue }) {
+    dispatch(startLoading());
+    try {
+      const res = await fetch(BASE_URL + URL_ENDPOINTS.FRIENDS_POSTS, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error(SYSTEM_MESSAGES.ERROR_404);
+        } else {
+          throw new Error(SYSTEM_MESSAGES.GET_POSTS_FAIL);
+        }
       }
+      const postsList = await res.json();
+      return postsList;
+    } catch (err: any) {
+      return rejectWithValue(err.message);
     }
-    const postsList = await res.json();
-    return postsList;
-  } catch (err: any) {
-    return rejectWithValue(err.message);
   }
-});
+);
 
 export const addPost = createAsyncThunk<
   PostType,
-  { text: string },
+  { text: string; image: string },
   { rejectValue: string }
 >('posts/addPost', async function (post, { dispatch, rejectWithValue }) {
   dispatch(startLoading());
