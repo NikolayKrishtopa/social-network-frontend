@@ -3,7 +3,7 @@
 
 // const {mode} = process.env;
 
-// const BASE_URL = 'https://api.mesto.nikolaykrish.nomoredomains.icu/'; 
-const BASE_URL =  'http://localhost:3001/';
+const BASE_URL = 'https://api.mesto.nikolaykrish.nomoredomains.icu/'; 
+// const BASE_URL =  'http://localhost:3001/';
 
 export default BASE_URL;

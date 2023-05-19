@@ -25,7 +25,6 @@ export default function Register(props: RegisterProps) {
 
   const onSubmitRegister: SubmitHandler<UserType> = async (data) => {
     await dispatch(regUser(data));
-    console.log(error);
     if (!error) {
       navigate('/login');
       reset();
@@ -36,7 +35,7 @@ export default function Register(props: RegisterProps) {
     await dispatch(editUser(data));
     console.log(error);
     if (!error) {
-      
+      navigate('/profile');
       onCancel && onCancel();
       reset();
     }
