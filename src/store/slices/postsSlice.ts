@@ -58,11 +58,12 @@ export const addPost = createAsyncThunk<
   { text: string; image: string },
   { rejectValue: string }
 >('posts/addPost', async function (post) {
+  
   const res = await fetch(BASE_URL + URL_ENDPOINTS.POSTS, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: JSON.stringify(post),
+    body: JSON.stringify({...post, image: post.image === '' ? null: post.image}),
   });
   if (!res.ok) {
     if (res.status === 404) {

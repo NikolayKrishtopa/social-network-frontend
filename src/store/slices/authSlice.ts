@@ -54,7 +54,7 @@ export const regUser = createAsyncThunk<UserTypeExt, UserType>(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({...payload, avatar: payload.avatar === '' ? null : payload.avatar}),
     });
     if (response.ok) {
       const user = await response.json();
@@ -72,7 +72,7 @@ export const editUser = createAsyncThunk<UserTypeExt, UserType>(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({...payload, avatar: payload.avatar === '' ? null : payload.avatar}),
       credentials: 'include',
     });
     if (response.ok) {
@@ -172,7 +172,7 @@ const authSlice = createSlice({
         state.isLogged = true;
         state.currentUser = action.payload;
       })
-      .addCase(checkAuth.rejected, (state, action) => {
+      .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;
         state.systMsgAuth = SYSTEM_MESSAGES.COOKIES_EXPIRED;
       })

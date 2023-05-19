@@ -139,7 +139,7 @@ export default function Register(props: RegisterProps) {
             className={s.input}
             defaultValue={current?.avatar || ''}
             {...register('avatar', {
-              required: 'Обязательное поле',
+              // required: 'Обязательное поле',
               pattern: /[^a-z0-9_\-.]/,
             })}
           />
