@@ -150,7 +150,7 @@ export default function Profile() {
                             onChange={(e) => setPostImg(e.target.value)}
                           />
                           <button
-                            className={s.addPostBtn}
+                            className={cn(s.addPostBtn, {[s.disabled]: postText.length===0})}
                             onClick={handleAddPost}
                           >
                             <img src={addPostBtn} alt='add post button' />
