@@ -10,4 +10,9 @@ A small fullstack social network. The corresponding backend app repository can b
 - npm i to install all the required dependencies.
 - npm run dev
 
+## Planned possible further functional:
+- incorporate extra themes.
+- incorporate multi-language.
+- messaging with websockets api.
+
 ### This app may also be seen being deployed in the virtual cloud server. Please refer to the [following link](https://mesto.nikolaykrishtopa.nomoredomains.icu/)
